@@ -8,6 +8,7 @@ import { PortalPageHeaderComponent } from '../../../shared/components/ui/portal-
 import { StatusBadgeComponent } from '../../../shared/components/ui/status-badge/status-badge.component';
 import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
 import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
+import { ConfirmationDialogComponent } from '../../../shared/components/ui/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-pro-bookings',
@@ -19,7 +20,8 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
     PortalPageHeaderComponent,
     StatusBadgeComponent,
     ButtonComponent,
-    IconComponent
+    IconComponent,
+    ConfirmationDialogComponent
   ],
   template: `
     <div class="space-y-8">
@@ -27,8 +29,12 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
       <app-portal-page-header
         categoryLabel="Legal Professional Portal"
         title="Bookings & Konsultasi Klien"
-        subtitle="Kelola dan tinjau seluruh permohonan konsultasi dari klien yang ditujukan kepada Anda."
+        subtitle="Kelola dan tinjau seluruh permohonan konsultasi dari klien yang ditujukan khusus kepada Anda."
         [breadcrumbs]="[{ label: 'Portal Advokat', url: '/portal/pro' }, { label: 'Bookings Klien' }]">
+        
+        <div class="text-xs text-brand-300 bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 rounded-lg font-mono">
+          Total {{ filteredBookings().length }} Berkas Booking
+        </div>
       </app-portal-page-header>
 
       <!-- Filter & Search Bar -->
@@ -50,7 +56,7 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
             <button
               (click)="selectedStatus.set(tab.value)"
               [class]="selectedStatus() === tab.value
-                ? 'px-3 py-1.5 rounded-lg bg-brand-500 text-white font-semibold text-xs transition-all'
+                ? 'px-3 py-1.5 rounded-lg bg-brand-500 text-white font-semibold text-xs transition-all shadow-sm'
                 : 'px-3 py-1.5 rounded-lg text-white/60 hover:text-white hover:bg-navy-800/60 font-medium text-xs transition-all'"
             >
               {{ tab.label }}
@@ -77,7 +83,7 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
                 <!-- Service & Case Info -->
                 <div class="space-y-1.5 md:col-span-2">
                   <h3 class="text-base font-semibold text-white font-heading">{{ booking.serviceTitle }}</h3>
-                  <p class="text-xs text-white/70 line-clamp-2">{{ booking.problemDescription }}</p>
+                  <p class="text-xs text-white/70 line-clamp-2 leading-relaxed">{{ booking.problemDescription }}</p>
                   
                   <div class="flex flex-wrap items-center gap-4 text-xs text-white/60 pt-2">
                     <span class="flex items-center gap-1.5 text-gold-400">
@@ -96,22 +102,22 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
                   <div>
                     <div class="text-xs text-white/40 uppercase tracking-wider font-semibold">Detail Klien</div>
                     <div class="text-sm font-semibold text-white mt-1">{{ booking.customerName }}</div>
-                    <div class="text-xs text-white/60">{{ booking.customerEmail }}</div>
+                    <div class="text-xs text-white/60 font-mono">{{ booking.customerEmail }}</div>
                     @if (booking.customerPhone) {
-                      <div class="text-xs text-white/50">{{ booking.customerPhone }}</div>
+                      <div class="text-xs text-white/50 font-mono">{{ booking.customerPhone }}</div>
                     }
                   </div>
 
                   <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-navy-800">
                     @if (booking.status === 'REQUESTED' || booking.status === 'UNDER_REVIEW') {
                       <app-button variant="primary" size="xs" iconLeft="check" (click)="onAccept(booking.id)">Terima</app-button>
-                      <app-button variant="danger" size="xs" iconLeft="x" (click)="onReject(booking.id)">Tolak</app-button>
+                      <app-button variant="danger" size="xs" iconLeft="x" (click)="openRejectModal(booking.id)">Tolak</app-button>
                     }
                     @if (booking.status === 'CONFIRMED') {
                       <app-button variant="outline" size="xs" (click)="onStartSession(booking.id)">Mulai Sesi</app-button>
                     }
                     @if (booking.status === 'IN_SESSION') {
-                      <app-button variant="secondary" size="xs" iconLeft="check-circle" (click)="onCompleteSession(booking.id)">Selesaikan</app-button>
+                      <app-button variant="secondary" size="xs" iconLeft="check-circle" (click)="confirmCompleteSession(booking.id)">Selesaikan</app-button>
                     }
                     <a [routerLink]="['/portal/pro/bookings', booking.id]">
                       <app-button variant="outline" size="xs">Detail Full</app-button>
@@ -131,6 +137,53 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
           <p class="text-xs text-white/50 max-w-sm mx-auto">Belum ada booking yang sesuai dengan kriteria filter atau pencarian Anda.</p>
         </div>
       }
+
+      <!-- Rejection Reason Modal -->
+      @if (rejectBookingId()) {
+        <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div class="glass-panel w-full max-w-md p-6 rounded-2xl border border-navy-800 space-y-4">
+            <div class="flex items-center justify-between border-b border-navy-800 pb-3">
+              <h3 class="text-base font-semibold text-white font-heading">Alasan Penolakan Booking</h3>
+              <button (click)="rejectBookingId.set(null)" class="text-white/40 hover:text-white">
+                <app-icon name="x" size="sm"></app-icon>
+              </button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+              <p class="text-white/70 leading-relaxed">
+                Berikan penjelasan resmi alasan penolakan permohonan booking ini. Alasan ini akan dikirimkan ke akun Klien.
+              </p>
+
+              <div>
+                <label class="block text-white/60 mb-1 font-semibold">Alasan Penolakan</label>
+                <textarea
+                  [(ngModel)]="rejectionReason"
+                  rows="3"
+                  placeholder="Misal: Jadwal bentrok dengan agenda sidang / Diluar bidang keahlian..."
+                  class="w-full bg-navy-950 border border-navy-800 rounded-xl p-2.5 text-white"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-3 border-t border-navy-800">
+              <app-button variant="danger" size="sm" class="w-full" (click)="onConfirmReject()">Konfirmasi Tolak</app-button>
+              <app-button variant="outline" size="sm" (click)="rejectBookingId.set(null)">Batal</app-button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Complete Session Dialog -->
+      <app-confirmation-dialog
+        [isOpen]="completeBookingId() !== null"
+        title="Tandai Sesi Konsultasi Selesai?"
+        message="Apakah Anda yakin sesi konsultasi ini telah selesai dilaksanakan? Status booking akan diperbarui menjadi Completed."
+        confirmText="Selesaikan Sesi"
+        variant="info"
+        (confirm)="onConfirmCompleteSession()"
+        (cancel)="completeBookingId.set(null)">
+      </app-confirmation-dialog>
+
     </div>
   `
 })
@@ -138,6 +191,10 @@ export class ProBookingsComponent {
   public readonly proService = inject(ProBookingService);
   public searchQuery = '';
   public selectedStatus = signal<string>('ALL');
+
+  public rejectBookingId = signal<string | null>(null);
+  public rejectionReason = '';
+  public completeBookingId = signal<string | null>(null);
 
   public readonly statusTabs = [
     { label: 'Semua Status', value: 'ALL' },
@@ -176,10 +233,16 @@ export class ProBookingsComponent {
     this.proService.acceptBooking(id);
   }
 
-  public onReject(id: string): void {
-    const reason = prompt('Alasan penolakan booking:');
-    if (reason) {
-      this.proService.rejectBooking(id, reason);
+  public openRejectModal(id: string): void {
+    this.rejectBookingId.set(id);
+    this.rejectionReason = '';
+  }
+
+  public onConfirmReject(): void {
+    const id = this.rejectBookingId();
+    if (id && this.rejectionReason) {
+      this.proService.rejectBooking(id, this.rejectionReason);
+      this.rejectBookingId.set(null);
     }
   }
 
@@ -187,7 +250,15 @@ export class ProBookingsComponent {
     this.proService.startSession(id);
   }
 
-  public onCompleteSession(id: string): void {
-    this.proService.completeSession(id);
+  public confirmCompleteSession(id: string): void {
+    this.completeBookingId.set(id);
+  }
+
+  public onConfirmCompleteSession(): void {
+    const id = this.completeBookingId();
+    if (id) {
+      this.proService.completeSession(id);
+      this.completeBookingId.set(null);
+    }
   }
 }

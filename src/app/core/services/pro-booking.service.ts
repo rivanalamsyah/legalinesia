@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { AuthStateService } from './auth-state.service';
 import { BookingItem, BookingStatus, canTransitionBooking } from '../models/booking.model';
 import { ConsultationNote } from '../models/consultation-note.model';
-import { ProfessionalSchedule, TimeSlot, BlockedDate } from '../models/schedule.model';
+import { ProfessionalSchedule, TimeSlot, BlockedDate, DayOfWeek } from '../models/schedule.model';
 import { LegalService } from '../models/legal-service.model';
 
 export interface ProClient {
@@ -463,6 +463,69 @@ export class ProBookingService {
     this.reviewsSignal.set(updated);
   }
 
+  public addTimeSlot(
+    dayOfWeek: DayOfWeek,
+    startTime: string,
+    endTime: string,
+    appointmentType: 'ONLINE_VIDEO' | 'IN_PERSON' | 'DOCUMENT_REVIEW'
+  ): { success: boolean; message?: string } {
+    if (!startTime || !endTime || startTime >= endTime) {
+      return { success: false, message: 'Jam mulai harus lebih awal dari jam selesai.' };
+    }
+
+    const currentSched = this.scheduleSignal();
+    const sameDaySlots = currentSched.weeklySlots.filter(s => s.dayOfWeek === dayOfWeek && s.isActive);
+
+    const toMinutes = (timeStr: string) => {
+      const [h, m] = timeStr.split(':').map(Number);
+      return h * 60 + m;
+    };
+
+    const newStart = toMinutes(startTime);
+    const newEnd = toMinutes(endTime);
+
+    for (const slot of sameDaySlots) {
+      const slotStart = toMinutes(slot.startTime);
+      const slotEnd = toMinutes(slot.endTime);
+
+      if (!(newEnd <= slotStart || newStart >= slotEnd)) {
+        return {
+          success: false,
+          message: `Slot jam ${startTime} - ${endTime} WIB bentrok dengan slot eksis (${slot.startTime} - ${slot.endTime} WIB) pada hari ${dayOfWeek}.`
+        };
+      }
+    }
+
+    const newSlot: TimeSlot = {
+      id: `ts-${Date.now()}`,
+      dayOfWeek,
+      startTime,
+      endTime,
+      isBooked: false,
+      isActive: true,
+      appointmentType
+    };
+
+    this.scheduleSignal.set({
+      ...currentSched,
+      weeklySlots: [...currentSched.weeklySlots, newSlot]
+    });
+
+    return { success: true };
+  }
+
+  public deleteTimeSlot(slotId: string): void {
+    const currentSched = this.scheduleSignal();
+    const updated = currentSched.weeklySlots.filter(s => s.id !== slotId);
+    this.scheduleSignal.set({ ...currentSched, weeklySlots: updated });
+  }
+
+  public removeBlockedDate(dateStr: string): void {
+    const currentSched = this.scheduleSignal();
+    const updated = currentSched.blockedDates.filter(b => b.date !== dateStr);
+    this.scheduleSignal.set({ ...currentSched, blockedDates: updated });
+  }
+
   public toggleTimeSlot(slotId: string): void {
     const currentSched = this.scheduleSignal();
     const updatedSlots = currentSched.weeklySlots.map(s => {
@@ -474,10 +537,15 @@ export class ProBookingService {
     this.scheduleSignal.set({ ...currentSched, weeklySlots: updatedSlots });
   }
 
-  public addBlockedDate(dateStr: string, reason: string): void {
+  public addBlockedDate(dateStr: string, reason: string): { success: boolean; message?: string } {
+    if (!dateStr) return { success: false, message: 'Tanggal libur tidak boleh kosong.' };
     const currentSched = this.scheduleSignal();
+    if (currentSched.blockedDates.some(b => b.date === dateStr)) {
+      return { success: false, message: 'Tanggal ini sudah ada dalam daftar libur.' };
+    }
     const updatedBlocked = [...currentSched.blockedDates, { date: dateStr, reason }];
     this.scheduleSignal.set({ ...currentSched, blockedDates: updatedBlocked });
+    return { success: true };
   }
 
   public addService(service: Omit<LegalService, 'id'>): void {
