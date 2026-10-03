@@ -16,7 +16,12 @@ export type ConfirmationVariant = 'danger' | 'warning' | 'info';
         <div class="fixed inset-0 bg-navy-950/80 backdrop-blur-sm transition-opacity" (click)="onCancel()"></div>
 
         <!-- Modal Box -->
-        <div class="relative w-full max-w-md bg-navy-900 border border-navy-700 rounded-3xl p-6 shadow-2xl space-y-5 z-10 animate-scale-up">
+        <div
+          class="relative w-full max-w-md bg-navy-900 border border-navy-700 rounded-3xl p-6 shadow-2xl space-y-5 z-10 animate-scale-up"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="confirm-dialog-title"
+        >
           
           <div class="flex items-start gap-4">
             <div [class]="iconContainerClasses">
@@ -24,7 +29,7 @@ export type ConfirmationVariant = 'danger' | 'warning' | 'info';
             </div>
             
             <div class="space-y-1">
-              <h3 class="text-lg font-bold text-white font-heading">
+              <h3 id="confirm-dialog-title" class="text-lg font-bold text-white font-heading">
                 {{ title }}
               </h3>
               <p class="text-xs text-white/70 leading-relaxed">
@@ -60,7 +65,14 @@ export class ConfirmationDialogComponent {
   @Output() cancel = new EventEmitter<void>();
 
   public get confirmButtonVariant(): 'primary' | 'gold' | 'outline' {
-    return this.variant === 'danger' ? 'primary' : 'primary';
+    switch (this.variant) {
+      case 'warning':
+        return 'gold';
+      case 'danger':
+      case 'info':
+      default:
+        return 'primary';
+    }
   }
 
   public get iconName(): string {

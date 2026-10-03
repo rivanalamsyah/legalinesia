@@ -47,13 +47,13 @@ import { PortalHeaderComponent } from './portal-header.component';
         </app-portal-header>
 
         <!-- Main Content Container -->
-        <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in">
+        <main id="main-content" class="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto animate-fade-in">
           <router-outlet></router-outlet>
         </main>
 
         <!-- Portal Dashboard Footer -->
         <footer class="py-4 px-6 border-t border-navy-800/40 text-center text-xs text-white/40">
-          <p>© 2026 LegalConnect Platform • System RBAC Active • Encrypted Legal Workspace</p>
+          <p>© 2026 Legalinesia Platform • System RBAC Active • Encrypted Legal Workspace</p>
         </footer>
       </div>
 

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerBookingService } from '../../../core/services/customer-booking.service';
 import { BookingItem, BookingStatus, canTransitionBooking } from '../../../core/models/booking.model';
 import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
@@ -14,7 +14,6 @@ import { ConfirmationDialogComponent } from '../../../shared/components/ui/confi
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     IconComponent,
     StatusBadgeComponent,
     PortalPageHeaderComponent,

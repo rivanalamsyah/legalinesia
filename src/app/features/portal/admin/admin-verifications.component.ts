@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminCmsService, AdminVerificationRequest } from '../../../core/services/admin-cms.service';
 import { PortalPageHeaderComponent } from '../../../shared/components/ui/portal-page-header/portal-page-header.component';
-import { StatusBadgeComponent } from '../../../shared/components/ui/status-badge/status-badge.component';
 import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
 import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
 import { ConfirmationDialogComponent } from '../../../shared/components/ui/confirmation-dialog/confirmation-dialog.component';
@@ -15,7 +14,6 @@ import { ConfirmationDialogComponent } from '../../../shared/components/ui/confi
     CommonModule,
     FormsModule,
     PortalPageHeaderComponent,
-    StatusBadgeComponent,
     ButtonComponent,
     IconComponent,
     ConfirmationDialogComponent

@@ -72,7 +72,7 @@ export interface DataTableColumn<T = any> {
                       }"
                       class="p-4">
                       @if (col.render) {
-                        <span [innerHTML]="col.render(row)"></span>
+                        <span>{{ col.render(row) }}</span>
                       } @else {
                         <span>{{ getCellValue(row, col.key) }}</span>
                       }

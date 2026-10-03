@@ -4,7 +4,6 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { AuthStateService } from '../../../core/services/auth-state.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { CustomerProfile } from '../../../core/models/user.model';
-import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
 import { PortalPageHeaderComponent } from '../../../shared/components/ui/portal-page-header/portal-page-header.component';
 import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
 import { ToastComponent } from '../../../shared/components/ui/toast/toast.component';
@@ -15,7 +14,6 @@ import { ToastComponent } from '../../../shared/components/ui/toast/toast.compon
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IconComponent,
     PortalPageHeaderComponent,
     ButtonComponent,
     ToastComponent

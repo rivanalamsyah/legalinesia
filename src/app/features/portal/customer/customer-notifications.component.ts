@@ -1,6 +1,5 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { CustomerNotificationService } from '../../../core/services/customer-notification.service';
 import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
 import { PortalPageHeaderComponent } from '../../../shared/components/ui/portal-page-header/portal-page-header.component';
@@ -11,7 +10,6 @@ import { ButtonComponent } from '../../../shared/components/ui/button/button.com
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     IconComponent,
     PortalPageHeaderComponent,
     ButtonComponent

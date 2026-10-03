@@ -70,13 +70,14 @@ import { BadgeComponent } from '../../shared/components/ui/badge/badge.component
       }
 
       <!-- Nav Items -->
-      <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto" aria-label="Menu navigasi portal">
         @for (item of navConfig.items; track item.id) {
           <a
             [routerLink]="item.route"
             routerLinkActive="bg-brand-600/20 text-brand-300 font-semibold border-l-2 border-brand-400"
             [routerLinkActiveOptions]="{ exact: false }"
             (click)="closeSidebar.emit()"
+            [attr.aria-label]="isCollapsed ? item.label : null"
             [title]="isCollapsed ? item.label : ''"
             class="flex items-center px-3.5 py-2.5 rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/5 transition-all group min-h-[44px]"
             [ngClass]="isCollapsed ? 'justify-center' : 'justify-between'">

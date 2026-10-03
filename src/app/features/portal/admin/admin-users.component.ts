@@ -5,7 +5,6 @@ import { AdminCmsService } from '../../../core/services/admin-cms.service';
 import { UserRole } from '../../../core/models/role.enum';
 import { CustomerProfile, LegalProfessionalProfile } from '../../../core/models/user.model';
 import { PortalPageHeaderComponent } from '../../../shared/components/ui/portal-page-header/portal-page-header.component';
-import { StatusBadgeComponent } from '../../../shared/components/ui/status-badge/status-badge.component';
 import { BadgeComponent } from '../../../shared/components/ui/badge/badge.component';
 import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
 import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
@@ -30,7 +29,6 @@ export interface AdminDisplayUser {
     CommonModule,
     FormsModule,
     PortalPageHeaderComponent,
-    StatusBadgeComponent,
     BadgeComponent,
     ButtonComponent,
     IconComponent,

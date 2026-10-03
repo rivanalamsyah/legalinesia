@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
 import { BadgeComponent } from '../../../shared/components/ui/badge/badge.component';
 
 @Component({
   selector: 'app-pro-consultations',
   standalone: true,
-  imports: [CommonModule, IconComponent, BadgeComponent],
+  imports: [CommonModule, BadgeComponent],
   template: `
     <div class="space-y-6">
       <div>
