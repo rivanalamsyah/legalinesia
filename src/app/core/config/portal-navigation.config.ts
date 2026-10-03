@@ -20,9 +20,13 @@ export const CUSTOMER_PORTAL_NAV: PortalNavConfig = {
   portalTitle: 'LegalConnect Klien',
   portalRoleName: 'Klien Terverifikasi',
   items: [
-    { id: 'dashboard', label: 'Ringkasan Portal', route: '/portal/customer/dashboard', iconName: 'layout-dashboard' },
-    { id: 'consultations', label: 'Konsultasi Saya', route: '/portal/customer/consultations', iconName: 'calendar-check', badge: 'Aktif', badgeVariant: 'primary' },
+    { id: 'dashboard', label: 'Dashboard', route: '/portal/customer/dashboard', iconName: 'layout-dashboard' },
+    { id: 'bookings', label: 'Booking Saya', route: '/portal/customer/bookings', iconName: 'calendar-check', badge: 'Aktif', badgeVariant: 'primary' },
+    { id: 'consultations', label: 'Sesi Konsultasi', route: '/portal/customer/consultations', iconName: 'video' },
     { id: 'documents', label: 'Dokumen Hukum', route: '/portal/customer/documents', iconName: 'file-text' },
+    { id: 'payments', label: 'Pembayaran', route: '/portal/customer/payments', iconName: 'credit-card' },
+    { id: 'reviews', label: 'Ulasan Saya', route: '/portal/customer/reviews', iconName: 'star' },
+    { id: 'notifications', label: 'Notifikasi', route: '/portal/customer/notifications', iconName: 'bell', badge: '3', badgeVariant: 'gold' },
     { id: 'profile', label: 'Pengaturan Profil', route: '/portal/customer/profile', iconName: 'user' }
   ]
 };

@@ -132,8 +132,20 @@ export const routes: Routes = [
               import('./features/portal/customer/customer-dashboard.component').then(m => m.CustomerDashboardComponent)
           },
           {
+            path: 'bookings',
+            title: 'Portal Klien - Booking Saya',
+            loadComponent: () =>
+              import('./features/portal/customer/customer-bookings.component').then(m => m.CustomerBookingsComponent)
+          },
+          {
+            path: 'bookings/:id',
+            title: 'Portal Klien - Detail Booking',
+            loadComponent: () =>
+              import('./features/portal/customer/customer-booking-detail.component').then(m => m.CustomerBookingDetailComponent)
+          },
+          {
             path: 'consultations',
-            title: 'Portal Klien - Konsultasi Saya',
+            title: 'Portal Klien - Sesi Konsultasi',
             loadComponent: () =>
               import('./features/portal/customer/customer-consultations.component').then(m => m.CustomerConsultationsComponent)
           },
@@ -142,6 +154,24 @@ export const routes: Routes = [
             title: 'Portal Klien - Dokumen Hukum',
             loadComponent: () =>
               import('./features/portal/customer/customer-documents.component').then(m => m.CustomerDocumentsComponent)
+          },
+          {
+            path: 'payments',
+            title: 'Portal Klien - Riwayat Pembayaran',
+            loadComponent: () =>
+              import('./features/portal/customer/customer-payments.component').then(m => m.CustomerPaymentsComponent)
+          },
+          {
+            path: 'reviews',
+            title: 'Portal Klien - Ulasan Saya',
+            loadComponent: () =>
+              import('./features/portal/customer/customer-reviews.component').then(m => m.CustomerReviewsComponent)
+          },
+          {
+            path: 'notifications',
+            title: 'Portal Klien - Notifikasi',
+            loadComponent: () =>
+              import('./features/portal/customer/customer-notifications.component').then(m => m.CustomerNotificationsComponent)
           },
           {
             path: 'profile',
