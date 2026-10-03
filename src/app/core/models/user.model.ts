@@ -10,6 +10,7 @@ export interface BaseUser {
   createdAt: string;
   updatedAt: string;
   isEmailVerified: boolean;
+  isActive?: boolean;
 }
 
 export interface CustomerProfile extends BaseUser {
