@@ -7,7 +7,7 @@ import { routes } from '../../app.routes';
 import { CustomTitleStrategy } from '../services/title-strategy';
 import { GlobalErrorHandler } from '../error-handler/global-error-handler';
 import { errorInterceptor } from '../interceptors/error.interceptor';
-import { provideFirebaseConfig } from './firebase.config';
+import { provideFirebase } from '../firebase/firebase.app';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
     provideHttpClient(withInterceptors([errorInterceptor])),
     provideAnimations(),
-    provideFirebaseConfig(),
+    provideFirebase(),
     { provide: TitleStrategy, useClass: CustomTitleStrategy },
     { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ]

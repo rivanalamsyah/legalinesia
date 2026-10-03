@@ -11,6 +11,30 @@
 npm-debug.log
 yarn-error.log
 
+# Environment & Secret files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Firebase & Cloud Credentials
+*.pem
+*.p12
+*.key
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
+client_secret*.json
+
+# Firebase CLI & Emulator logs
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+pubsub-debug.log*
+hub-debug.log*
+
 # IDEs and editors
 .idea/
 .project
