@@ -33,6 +33,45 @@ export interface AdminAuditLog {
   severity: 'INFO' | 'WARNING' | 'CRITICAL';
 }
 
+export interface AdminReview {
+  id: string;
+  bookingId: string;
+  clientName: string;
+  professionalName: string;
+  rating: number;
+  comment: string;
+  serviceTitle: string;
+  createdAt: string;
+  status: 'PUBLISHED' | 'FLAGGED' | 'HIDDEN';
+}
+
+export interface AdminBroadcastNotification {
+  id: string;
+  title: string;
+  message: string;
+  targetRole: 'ALL' | 'CUSTOMER' | 'LEGAL_PRO';
+  sentAt: string;
+  recipientCount: number;
+}
+
+export interface AdminFaqItem {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+  order: number;
+  isActive: boolean;
+}
+
+export interface AdminPlatformSettings {
+  siteName: string;
+  supportEmail: string;
+  supportPhone: string;
+  noticePeriodHours: number;
+  autoConfirmBookings: boolean;
+  maintenanceMode: boolean;
+}
+
 export const MOCK_ADMIN_CUSTOMERS: CustomerProfile[] = [
   {
     id: 'cust-demo-101',
@@ -177,6 +216,95 @@ export const MOCK_PRACTICE_AREAS: LegalServiceCategory[] = [
   }
 ];
 
+export const MOCK_ADMIN_REVIEWS: AdminReview[] = [
+  {
+    id: 'rev-1',
+    bookingId: 'BK-202609-020',
+    clientName: 'Budi Santoso',
+    professionalName: 'Bambang Sutrisno, S.H., M.H.',
+    rating: 5,
+    comment: 'Penjelasan Pak Bambang sangat lugas dan memberikan arah mitigasi sengketa merek yang sangat jelas. Sangat profesional!',
+    serviceTitle: 'Pendampingan Sengketa Merek & Lisensi',
+    createdAt: '2026-09-21T10:00:00Z',
+    status: 'PUBLISHED'
+  },
+  {
+    id: 'rev-2',
+    bookingId: 'BK-202609-044',
+    clientName: 'Siti Rahmawati',
+    professionalName: 'Dr. Anisa Rahmawati, S.H., M.Kn.',
+    rating: 5,
+    comment: 'Sangat terbantu untuk audit draf perjanjian pemisahan harta pra-nikah. Penjelasan klausul risikonya detail.',
+    serviceTitle: 'Review & Drafting Perjanjian Kerjasama',
+    createdAt: '2026-09-26T14:00:00Z',
+    status: 'PUBLISHED'
+  }
+];
+
+export const MOCK_ADMIN_NOTIFICATIONS: AdminBroadcastNotification[] = [
+  {
+    id: 'notif-1',
+    title: 'Pembaruan Fitur Consultation Notes 2.0',
+    message: 'Fitur resume nasihat hukum kini dapat langsung diakses oleh Klien melalui portal.',
+    targetRole: 'ALL',
+    sentAt: '2026-10-01 09:00 WIB',
+    recipientCount: 1420
+  }
+];
+
+export const MOCK_ADMIN_FAQS: AdminFaqItem[] = [
+  {
+    id: 'faq-1',
+    question: 'Bagaimana cara menjadwalkan konsultasi hukum online di Legalinesia?',
+    answer: 'Anda cukup memilih Advokat atau Layanan Hukum yang sesuai, tentukan tanggal serta slot jam yang tersedia, dan selesaikan pembayaran.',
+    category: 'Umum',
+    order: 1,
+    isActive: true
+  },
+  {
+    id: 'faq-2',
+    question: 'Apakah seluruh Advokat di Legalinesia telah terverifikasi resmi?',
+    answer: 'Ya, seluruh advokat terverifikasi melalui sertifikat keanggotaan organisasi PERADI/KAI dan Nomor Induk Advokat (NIA) aktif.',
+    category: 'Advokat & Verifikasi',
+    order: 2,
+    isActive: true
+  }
+];
+
+export const MOCK_ADMIN_INSIGHTS: InsightArticle[] = [
+  {
+    id: 'art-1',
+    slug: 'panduan-pendirian-pt-pma-2026',
+    title: 'Panduan Lengkap Syarat & Biaya Pendirian PT PMA Tahun 2026',
+    excerpt: 'Langkah hukum dan kualifikasi KBLI untuk pendirian PT Penanaman Modal Asing di Indonesia melalui OSS RBA.',
+    contentHtml: '<p>Pendirian PT PMA di Indonesia memerlukan pemahaman ketat mengenai Daftar Positif Investasi (DPI)...</p>',
+    category: 'Hukum Bisnis & Korporasi',
+    authorName: 'Bambang Sutrisno, S.H., M.H.',
+    authorTitle: 'Advokat Senior & Konsultan Hukum Bisnis',
+    authorAvatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80',
+    publishedAt: '2026-09-28',
+    readTimeMinutes: 5,
+    coverImageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=80',
+    tags: ['PT PMA', 'OSS RBA', 'Hukum Bisnis'],
+    isFeatured: true
+  },
+  {
+    id: 'art-2',
+    slug: 'cara-menanggapi-surat-somasi-merek',
+    title: 'Cara Menanggapi Surat Somasi Sengketa Merek Dagang',
+    excerpt: 'Panduan taktis bagi pemilik brand dalam menanggapi tuduhan dugaan pelanggaran HKI tanpa panik.',
+    contentHtml: '<p>Menerima surat somasi merek dagang bukan berarti Anda langsung bersalah secara legal...</p>',
+    category: 'HKI & Hak Cipta',
+    authorName: 'Tim Legalinesia',
+    authorTitle: 'Platform Legal Tech Indonesia',
+    authorAvatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+    publishedAt: '2026-10-02',
+    readTimeMinutes: 4,
+    coverImageUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=600&auto=format&fit=crop&q=80',
+    tags: ['HKI', 'Somasi', 'Merek']
+  }
+];
+
 export const MOCK_ADMIN_VERIFICATIONS: AdminVerificationRequest[] = [
   {
     id: 'ver-001',
@@ -223,6 +351,18 @@ export class AdminCmsService {
   private readonly practiceAreasSignal = signal<LegalServiceCategory[]>(MOCK_PRACTICE_AREAS);
   private readonly verificationsSignal = signal<AdminVerificationRequest[]>(MOCK_ADMIN_VERIFICATIONS);
   private readonly auditLogsSignal = signal<AdminAuditLog[]>(MOCK_AUDIT_LOGS);
+  private readonly reviewsSignal = signal<AdminReview[]>(MOCK_ADMIN_REVIEWS);
+  private readonly notificationsSignal = signal<AdminBroadcastNotification[]>(MOCK_ADMIN_NOTIFICATIONS);
+  private readonly faqsSignal = signal<AdminFaqItem[]>(MOCK_ADMIN_FAQS);
+  private readonly insightsSignal = signal<InsightArticle[]>(MOCK_ADMIN_INSIGHTS);
+  private readonly settingsSignal = signal<AdminPlatformSettings>({
+    siteName: 'Legalinesia Platform',
+    supportEmail: 'support@legalinesia.id',
+    supportPhone: '+622150009999',
+    noticePeriodHours: 24,
+    autoConfirmBookings: false,
+    maintenanceMode: false
+  });
 
   // Combine bookings across platform
   private readonly allBookingsSignal = signal<BookingItem[]>([
@@ -236,6 +376,11 @@ export class AdminCmsService {
   public readonly verifications = computed(() => this.verificationsSignal());
   public readonly auditLogs = computed(() => this.auditLogsSignal());
   public readonly allBookings = computed(() => this.allBookingsSignal());
+  public readonly reviews = computed(() => this.reviewsSignal());
+  public readonly notifications = computed(() => this.notificationsSignal());
+  public readonly faqs = computed(() => this.faqsSignal());
+  public readonly insights = computed(() => this.insightsSignal());
+  public readonly settings = computed(() => this.settingsSignal());
 
   public readonly pendingVerificationsCount = computed(() => {
     return this.verificationsSignal().filter(v => v.status === 'PENDING').length;
@@ -256,15 +401,12 @@ export class AdminCmsService {
     const req = list.find(v => v.id === reqId);
     if (!req) return;
 
-    // 1. Update verification request status
     const updatedVerifications = list.map(v => v.id === reqId ? { ...v, status: 'VERIFIED' as const } : v);
     this.verificationsSignal.set(updatedVerifications);
 
-    // 2. Update professional profile isVerified state
     const updatedPros = this.prosSignal().map(p => p.id === req.professionalId ? { ...p, isVerified: true } : p);
     this.prosSignal.set(updatedPros);
 
-    // 3. Log audit event
     this.addAuditLog('VERIFY_ADVOCATE_APPROVED', req.fullName, 'INFO');
   }
 
@@ -326,6 +468,65 @@ export class AdminCmsService {
     this.addAuditLog('MANUAL_PAYMENT_VERIFIED', bookingId, 'INFO');
   }
 
+  public moderateReview(reviewId: string, status: 'PUBLISHED' | 'FLAGGED' | 'HIDDEN'): void {
+    const list = this.reviewsSignal();
+    const updated = list.map(r => r.id === reviewId ? { ...r, status } : r);
+    this.reviewsSignal.set(updated);
+    this.addAuditLog('MODERATE_REVIEW', `Review ID ${reviewId} -> ${status}`, 'WARNING');
+  }
+
+  public dispatchBroadcastNotification(title: string, message: string, targetRole: 'ALL' | 'CUSTOMER' | 'LEGAL_PRO'): void {
+    const newNotif: AdminBroadcastNotification = {
+      id: `notif-${Date.now()}`,
+      title,
+      message,
+      targetRole,
+      sentAt: new Date().toLocaleString('id-ID'),
+      recipientCount: targetRole === 'ALL' ? 1420 : targetRole === 'CUSTOMER' ? 1334 : 86
+    };
+
+    this.notificationsSignal.set([newNotif, ...this.notificationsSignal()]);
+    this.addAuditLog('DISPATCH_BROADCAST_NOTIFICATION', `${title} (Target: ${targetRole})`, 'INFO');
+  }
+
+  public addFaq(question: string, answer: string, category: string): void {
+    const newFaq: AdminFaqItem = {
+      id: `faq-${Date.now()}`,
+      question,
+      answer,
+      category,
+      order: this.faqsSignal().length + 1,
+      isActive: true
+    };
+    this.faqsSignal.set([...this.faqsSignal(), newFaq]);
+    this.addAuditLog('CREATE_FAQ_ITEM', question, 'INFO');
+  }
+
+  public addInsightArticle(article: Omit<InsightArticle, 'id'>): { success: boolean; message?: string } {
+    if (!article.slug || !article.title) {
+      return { success: false, message: 'Judul dan slug artikel wajib diisi.' };
+    }
+
+    if (this.insightsSignal().some(a => a.slug === article.slug)) {
+      return { success: false, message: `Slug artikel "${article.slug}" sudah digunakan.` };
+    }
+
+    const newArticle: InsightArticle = {
+      ...article,
+      id: `art-${Date.now()}`
+    };
+
+    this.insightsSignal.set([newArticle, ...this.insightsSignal()]);
+    this.addAuditLog('CREATE_INSIGHT_ARTICLE', article.title, 'INFO');
+    return { success: true };
+  }
+
+  public updatePlatformSettings(data: Partial<AdminPlatformSettings>): void {
+    this.settingsSignal.set({ ...this.settingsSignal(), ...data });
+    this.addAuditLog('UPDATE_PLATFORM_SETTINGS', 'Pengaturan Platform Diperbarui', 'WARNING');
+  }
+
+  // Strict Append-Only audit log recorder (No delete or edit!)
   private addAuditLog(action: string, target: string, severity: 'INFO' | 'WARNING' | 'CRITICAL'): void {
     const user = this.authState.currentUser();
     const newLog: AdminAuditLog = {

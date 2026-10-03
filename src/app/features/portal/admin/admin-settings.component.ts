@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AdminCmsService } from '../../../core/services/admin-cms.service';
 import { PortalPageHeaderComponent } from '../../../shared/components/ui/portal-page-header/portal-page-header.component';
 import { StatusBadgeComponent } from '../../../shared/components/ui/status-badge/status-badge.component';
@@ -11,6 +12,7 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     PortalPageHeaderComponent,
     StatusBadgeComponent,
     ButtonComponent,
@@ -22,11 +24,18 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
       <app-portal-page-header
         categoryLabel="Platform Management CMS"
         title="Pengaturan Platform & Audit Logs"
-        subtitle="Konfigurasi variabel sistem global, pemantauan integrasi Firebase Auth/Firestore, dan audit trail log keamanan."
+        subtitle="Konfigurasi operasional platform global, pemantauan integrasi Firebase Auth/Firestore, dan audit trail log keamanan."
         [breadcrumbs]="[{ label: 'Admin CMS', url: '/portal/admin' }, { label: 'Pengaturan System' }]">
         
         <app-status-badge status="ACTIVE" label="ALL SYSTEMS NORMAL"></app-status-badge>
       </app-portal-page-header>
+
+      @if (saveSuccess()) {
+        <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
+          <app-icon name="check-circle" size="sm"></app-icon>
+          <span>Pengaturan platform berhasil disimpan dan diperbarui secara global!</span>
+        </div>
+      }
 
       <!-- System Health Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -58,32 +67,74 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
         </div>
       </div>
 
-      <!-- Audit Logs Table -->
+      <!-- Platform Settings Form -->
+      <div class="glass-panel p-6 rounded-2xl border border-navy-800 space-y-4">
+        <div class="border-b border-navy-800 pb-3">
+          <h3 class="text-base font-semibold text-white font-heading flex items-center gap-2">
+            <app-icon name="settings" size="sm" class="text-brand-400"></app-icon>
+            <span>Konfigurasi Operasional Platform</span>
+          </h3>
+          <p class="text-xs text-white/50 mt-0.5">Pengaturan variabel publik dan toleransi waktu booking</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div>
+            <label class="block text-white/60 mb-1">Nama Situs Platform</label>
+            <input type="text" [(ngModel)]="siteName" class="w-full bg-navy-950 border border-navy-800 rounded-xl p-2.5 text-white" />
+          </div>
+
+          <div>
+            <label class="block text-white/60 mb-1">Email Dukungan Bantuan</label>
+            <input type="email" [(ngModel)]="supportEmail" class="w-full bg-navy-950 border border-navy-800 rounded-xl p-2.5 text-white font-mono" />
+          </div>
+
+          <div>
+            <label class="block text-white/60 mb-1">Telepon Bantuan Ops</label>
+            <input type="text" [(ngModel)]="supportPhone" class="w-full bg-navy-950 border border-navy-800 rounded-xl p-2.5 text-white font-mono" />
+          </div>
+
+          <div>
+            <label class="block text-white/60 mb-1">Notice Period Minimum (Jam Sebelum Booking)</label>
+            <input type="number" [(ngModel)]="noticePeriodHours" class="w-full bg-navy-950 border border-navy-800 rounded-xl p-2.5 text-white" />
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-navy-800 flex justify-end">
+          <app-button variant="primary" size="sm" iconLeft="save" (click)="onSaveSettings()">
+            Simpan Pengaturan
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Append-Only Audit Logs Table (Read Only) -->
       <div class="glass-panel p-6 rounded-2xl border border-navy-800 space-y-4">
         <div class="flex items-center justify-between border-b border-navy-800 pb-3">
-          <h3 class="text-base font-semibold text-white font-heading flex items-center gap-2">
-            <app-icon name="shield-check" size="sm" class="text-brand-400"></app-icon>
-            <span>Platform Security Audit Trail</span>
-          </h3>
-          <span class="text-xs text-white/50 font-mono">Total {{ adminService.auditLogs().length }} Log Events</span>
+          <div>
+            <h3 class="text-base font-semibold text-white font-heading flex items-center gap-2">
+              <app-icon name="shield-check" size="sm" class="text-purple-400"></app-icon>
+              <span>Platform Append-Only Audit Logs</span>
+            </h3>
+            <p class="text-xs text-white/50 mt-0.5">Rekaman mutlak aktivitas admin. Catatan tidak dapat diedit atau dihapus secara bebas.</p>
+          </div>
+          <span class="text-xs text-white/50 font-mono">Total {{ adminService.auditLogs().length }} Logs</span>
         </div>
 
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead class="bg-navy-950/80 border-b border-navy-800 text-white/60 uppercase font-mono">
               <tr>
-                <th class="p-3">Waktu</th>
-                <th class="p-3">Aksi Log</th>
+                <th class="p-3">Timestamp</th>
+                <th class="p-3">Aksi Audit</th>
                 <th class="p-3">Target Entitas</th>
                 <th class="p-3">Aktor (Admin)</th>
-                <th class="p-3">Severity</th>
+                <th class="p-3">Tingkat Bahaya</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-navy-800/80 text-white">
               @for (log of adminService.auditLogs(); track log.id) {
                 <tr class="hover:bg-navy-900/50 transition-colors">
                   <td class="p-3 text-white/50 font-mono">{{ log.timestamp }}</td>
-                  <td class="p-3 font-mono font-bold text-brand-300">{{ log.action }}</td>
+                  <td class="p-3 font-mono font-bold text-purple-300">{{ log.action }}</td>
                   <td class="p-3 text-white/90 font-semibold">{{ log.target }}</td>
                   <td class="p-3 text-white/70 font-mono">{{ log.actorEmail }}</td>
                   <td class="p-3">
@@ -105,4 +156,23 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
 })
 export class AdminSettingsComponent {
   public readonly adminService = inject(AdminCmsService);
+
+  public saveSuccess = signal<boolean>(false);
+
+  public siteName = this.adminService.settings().siteName;
+  public supportEmail = this.adminService.settings().supportEmail;
+  public supportPhone = this.adminService.settings().supportPhone;
+  public noticePeriodHours = this.adminService.settings().noticePeriodHours;
+
+  public onSaveSettings(): void {
+    this.adminService.updatePlatformSettings({
+      siteName: this.siteName,
+      supportEmail: this.supportEmail,
+      supportPhone: this.supportPhone,
+      noticePeriodHours: this.noticePeriodHours
+    });
+
+    this.saveSuccess.set(true);
+    setTimeout(() => this.saveSuccess.set(false), 4000);
+  }
 }
