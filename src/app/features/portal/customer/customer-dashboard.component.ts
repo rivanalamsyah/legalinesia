@@ -4,93 +4,89 @@ import { RouterLink } from '@angular/router';
 import { AuthStateService } from '../../../core/services/auth-state.service';
 import { UserProfile } from '../../../core/models/user.model';
 import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
-import { BadgeComponent } from '../../../shared/components/ui/badge/badge.component';
+import { KpiCardComponent } from '../../../shared/components/ui/kpi-card/kpi-card.component';
+import { StatusBadgeComponent } from '../../../shared/components/ui/status-badge/status-badge.component';
+import { PortalPageHeaderComponent } from '../../../shared/components/ui/portal-page-header/portal-page-header.component';
+import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
 
 @Component({
   selector: 'app-customer-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent, BadgeComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    IconComponent,
+    KpiCardComponent,
+    StatusBadgeComponent,
+    PortalPageHeaderComponent,
+    ButtonComponent
+  ],
   template: `
-    <div class="space-y-6">
+    <div class="space-y-8">
       
-      <!-- Welcome Header -->
-      <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-navy-800">
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-wider text-brand-400">Portal Klien</span>
-          <h2 class="text-2xl font-bold text-white mt-1">
-            Selamat Datang, {{ user?.fullName || 'Klien LegalConnect' }}!
-          </h2>
-          <p class="text-sm text-white/60 mt-1">
-            Kelola sesi konsultasi hukum, lacak dokumen permohonan, dan jadwalkan pertemuan dengan advokat terverifikasi.
-          </p>
-        </div>
-        <a
-          routerLink="/booking"
-          class="px-5 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-semibold text-sm hover:opacity-95 transition-opacity flex items-center gap-2 shadow-lg shadow-brand-600/20">
-          <app-icon name="calendar-plus" size="sm"></app-icon>
-          <span>Jadwalkan Konsultasi Baru</span>
-        </a>
-      </div>
-
-      <!-- Quick Metrics Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Standardized Portal Page Header -->
+      <app-portal-page-header
+        categoryLabel="Portal Klien"
+        [title]="'Selamat Datang, ' + (user?.fullName || 'Klien LegalConnect')"
+        subtitle="Kelola sesi konsultasi hukum, lacak dokumen permohonan, dan jadwalkan pertemuan dengan advokat terverifikasi."
+        [breadcrumbs]="[{ label: 'Portal Klien', url: '/portal/customer' }, { label: 'Ringkasan' }]">
         
-        <div class="glass-panel p-5 rounded-xl border border-navy-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-white/50 font-medium">Konsultasi Aktif</span>
-            <div class="text-2xl font-bold text-white mt-1">1</div>
-            <span class="text-[11px] text-emerald-400 font-medium">Mendatang minggu ini</span>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400">
-            <app-icon name="calendar" size="md"></app-icon>
-          </div>
-        </div>
+        <a routerLink="/booking">
+          <app-button variant="primary" size="md" iconLeft="calendar-plus">
+            Jadwalkan Konsultasi
+          </app-button>
+        </a>
+      </app-portal-page-header>
 
-        <div class="glass-panel p-5 rounded-xl border border-navy-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-white/50 font-medium">Total Konsultasi</span>
-            <div class="text-2xl font-bold text-white mt-1">4</div>
-            <span class="text-[11px] text-white/40">Selesai 3 sesi</span>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-            <app-icon name="check-circle-2" size="md"></app-icon>
-          </div>
-        </div>
+      <!-- KPI Metrics Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-kpi-card
+          label="Konsultasi Aktif"
+          value="1 Sesi"
+          changeText="Mendatang minggu ini"
+          trend="up"
+          iconName="calendar"
+          iconVariant="primary">
+        </app-kpi-card>
 
-        <div class="glass-panel p-5 rounded-xl border border-navy-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-white/50 font-medium">Dokumen Tersimpan</span>
-            <div class="text-2xl font-bold text-white mt-1">6</div>
-            <span class="text-[11px] text-white/40">Akta, NIB, & Kontrak</span>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-            <app-icon name="file-text" size="md"></app-icon>
-          </div>
-        </div>
+        <app-kpi-card
+          label="Total Konsultasi"
+          value="4 Sesi"
+          changeText="3 sesi telah selesai"
+          trend="neutral"
+          iconName="check-circle-2"
+          iconVariant="success">
+        </app-kpi-card>
 
-        <div class="glass-panel p-5 rounded-xl border border-navy-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-white/50 font-medium">Status Akun</span>
-            <div class="text-lg font-bold text-emerald-400 mt-1">Terverifikasi</div>
-            <span class="text-[11px] text-white/40">KTP Terkonfirmasi</span>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-            <app-icon name="shield-check" size="md"></app-icon>
-          </div>
-        </div>
+        <app-kpi-card
+          label="Dokumen Hukum Vault"
+          value="6 Berkas"
+          changeText="Akta, NIB, & Kontrak"
+          trend="neutral"
+          iconName="file-text"
+          iconVariant="warning">
+        </app-kpi-card>
 
+        <app-kpi-card
+          label="Status Verifikasi Akun"
+          value="Aktif"
+          changeText="Identitas KTP Terkonfirmasi"
+          trend="up"
+          iconName="shield-check"
+          iconVariant="gold">
+        </app-kpi-card>
       </div>
 
-      <!-- Content Grid: Upcoming Consultations & Recent Documents -->
+      <!-- Upcoming Session & Guides -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <!-- Active Session Card -->
         <div class="lg:col-span-2 glass-panel p-6 rounded-2xl border border-navy-800 space-y-4">
           <div class="flex items-center justify-between">
-            <h3 class="text-base font-semibold text-white flex items-center gap-2">
+            <h2 class="text-base font-semibold text-white font-heading flex items-center gap-2">
               <app-icon name="clock" size="sm" className="text-brand-400"></app-icon>
               <span>Jadwal Konsultasi Mendatang</span>
-            </h3>
+            </h2>
             <a routerLink="/portal/customer/consultations" class="text-xs text-brand-400 hover:underline">Lihat Semua</a>
           </div>
 
@@ -105,7 +101,7 @@ import { BadgeComponent } from '../../../shared/components/ui/badge/badge.compon
                   <div class="text-xs text-white/60">Advokat Senior Hukum Bisnis</div>
                 </div>
               </div>
-              <app-badge variant="primary" size="sm">CONFIRMED</app-badge>
+              <app-status-badge status="CONFIRMED"></app-status-badge>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-white/5 text-xs text-white/70">
@@ -121,9 +117,9 @@ import { BadgeComponent } from '../../../shared/components/ui/badge/badge.compon
           </div>
         </div>
 
-        <!-- Quick Info Panel -->
+        <!-- Guide Panel -->
         <div class="glass-panel p-6 rounded-2xl border border-navy-800 space-y-4">
-          <h3 class="text-base font-semibold text-white">Panduan Layanan Klien</h3>
+          <h2 class="text-base font-semibold text-white font-heading">Vault & Panduan Klien</h2>
           <p class="text-xs text-white/60 leading-relaxed">
             Gunakan portal ini untuk mengakses catatan hasil konsultasi, berkomunikasi secara aman dengan advokat Anda, serta mengunggah berkas hukum yang diperlukan.
           </p>

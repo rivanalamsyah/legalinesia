@@ -4,104 +4,97 @@ import { RouterLink } from '@angular/router';
 import { AuthStateService } from '../../../core/services/auth-state.service';
 import { UserProfile } from '../../../core/models/user.model';
 import { IconComponent } from '../../../shared/components/ui/icon/icon.component';
-import { BadgeComponent } from '../../../shared/components/ui/badge/badge.component';
+import { KpiCardComponent } from '../../../shared/components/ui/kpi-card/kpi-card.component';
+import { StatusBadgeComponent } from '../../../shared/components/ui/status-badge/status-badge.component';
+import { PortalPageHeaderComponent } from '../../../shared/components/ui/portal-page-header/portal-page-header.component';
 
 @Component({
   selector: 'app-pro-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent, BadgeComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    IconComponent,
+    KpiCardComponent,
+    StatusBadgeComponent,
+    PortalPageHeaderComponent
+  ],
   template: `
-    <div class="space-y-6">
+    <div class="space-y-8">
       
-      <!-- Welcome Header -->
-      <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-navy-800">
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-wider text-brand-400">Portal Advokat & Partner</span>
-          <h2 class="text-2xl font-bold text-white mt-1">
-            Selamat Datang, {{ user?.fullName || 'Advokat LegalConnect' }}!
-          </h2>
-          <p class="text-sm text-white/60 mt-1">
-            Kelola jadwal ketersediaan konsultasi, tinjau permintaan klien, buat catatan kasus hukum, dan atur katalog layanan Anda.
-          </p>
-        </div>
-        <div class="flex items-center gap-2">
-          <app-badge variant="gold" size="md">VERIFIED LAWYER</app-badge>
-        </div>
-      </div>
-
-      <!-- Quick Metrics Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Standardized Page Header -->
+      <app-portal-page-header
+        categoryLabel="Portal Advokat & Partner"
+        [title]="'Selamat Datang, ' + (user?.fullName || 'Advokat LegalConnect')"
+        subtitle="Kelola jadwal ketersediaan konsultasi, tinjau permintaan klien, buat catatan kasus hukum, dan atur katalog layanan Anda."
+        [breadcrumbs]="[{ label: 'Portal Advokat', url: '/portal/pro' }, { label: 'Ringkasan Kinerja' }]">
         
-        <div class="glass-panel p-5 rounded-xl border border-navy-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-white/50 font-medium">Sesi Hari Ini</span>
-            <div class="text-2xl font-bold text-white mt-1">3</div>
-            <span class="text-[11px] text-emerald-400 font-medium">Terjadwal 14:00 - 17:00</span>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400">
-            <app-icon name="calendar-check" size="md"></app-icon>
-          </div>
-        </div>
+        <app-status-badge status="VERIFIED" label="VERIFIED ADVOKAT"></app-status-badge>
+      </app-portal-page-header>
 
-        <div class="glass-panel p-5 rounded-xl border border-navy-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-white/50 font-medium">Total Klien Ditangani</span>
-            <div class="text-2xl font-bold text-white mt-1">128</div>
-            <span class="text-[11px] text-white/40">Rating 4.9 / 5.0</span>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-            <app-icon name="users" size="md"></app-icon>
-          </div>
-        </div>
+      <!-- KPI Metrics Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-kpi-card
+          label="Sesi Hari Ini"
+          value="3 Sesi"
+          changeText="Terjadwal 14:00 - 17:00"
+          trend="up"
+          iconName="calendar-check"
+          iconVariant="primary">
+        </app-kpi-card>
 
-        <div class="glass-panel p-5 rounded-xl border border-navy-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-white/50 font-medium">Catatan Kasus Selesai</span>
-            <div class="text-2xl font-bold text-white mt-1">94</div>
-            <span class="text-[11px] text-white/40">Telah dibagikan ke klien</span>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-            <app-icon name="notebook-pen" size="md"></app-icon>
-          </div>
-        </div>
+        <app-kpi-card
+          label="Total Klien Ditangani"
+          value="128 Klien"
+          changeText="Rating 4.9 / 5.0"
+          trend="up"
+          iconName="users"
+          iconVariant="success">
+        </app-kpi-card>
 
-        <div class="glass-panel p-5 rounded-xl border border-navy-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-white/50 font-medium">Tarif Konsultasi</span>
-            <div class="text-xl font-bold text-amber-400 mt-1">Rp 350.000</div>
-            <span class="text-[11px] text-white/40">Per sesi / jam</span>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-            <app-icon name="briefcase" size="md"></app-icon>
-          </div>
-        </div>
+        <app-kpi-card
+          label="Catatan Kasus Selesai"
+          value="94 Berkas"
+          changeText="Telah dibagikan ke klien"
+          trend="neutral"
+          iconName="notebook-pen"
+          iconVariant="purple">
+        </app-kpi-card>
 
+        <app-kpi-card
+          label="Tarif Konsultasi Sesi"
+          value="Rp 350.000"
+          changeText="Per jam / sesi"
+          trend="neutral"
+          iconName="briefcase"
+          iconVariant="gold">
+        </app-kpi-card>
       </div>
 
       <!-- Quick Actions Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="glass-panel p-6 rounded-2xl border border-navy-800 space-y-3">
-          <h3 class="text-base font-semibold text-white">Atur Jadwal & Ketersediaan</h3>
-          <p class="text-xs text-white/60">Tentukan slot jam dan hari kerja tempat klien dapat melakukan booking.</p>
-          <a routerLink="/portal/pro/schedule" class="inline-flex items-center gap-1.5 text-xs text-brand-400 font-semibold hover:underline">
+          <h3 class="text-base font-semibold text-white font-heading">Atur Jadwal & Ketersediaan</h3>
+          <p class="text-xs text-white/60 leading-relaxed">Tentukan slot jam dan hari kerja tempat klien dapat melakukan booking.</p>
+          <a routerLink="/portal/pro/schedule" class="inline-flex items-center gap-1.5 text-xs text-brand-400 font-semibold hover:underline pt-2">
             <span>Kelola Jadwal Ketersediaan</span>
             <app-icon name="arrow-right" size="xs"></app-icon>
           </a>
         </div>
 
         <div class="glass-panel p-6 rounded-2xl border border-navy-800 space-y-3">
-          <h3 class="text-base font-semibold text-white">Tulis Catatan Konsultasi</h3>
-          <p class="text-xs text-white/60">Dokumentasikan ringkasan nasihat hukum dan langkah selanjutnya pasca sesi.</p>
-          <a routerLink="/portal/pro/case-notes" class="inline-flex items-center gap-1.5 text-xs text-brand-400 font-semibold hover:underline">
+          <h3 class="text-base font-semibold text-white font-heading">Tulis Catatan Konsultasi</h3>
+          <p class="text-xs text-white/60 leading-relaxed">Dokumentasikan ringkasan nasihat hukum dan langkah selanjutnya pasca sesi.</p>
+          <a routerLink="/portal/pro/case-notes" class="inline-flex items-center gap-1.5 text-xs text-brand-400 font-semibold hover:underline pt-2">
             <span>Buat Catatan Baru</span>
             <app-icon name="arrow-right" size="xs"></app-icon>
           </a>
         </div>
 
         <div class="glass-panel p-6 rounded-2xl border border-navy-800 space-y-3">
-          <h3 class="text-base font-semibold text-white">Kelola Layanan Hukum</h3>
-          <p class="text-xs text-white/60">Perbarui rincian spesialisasi, cakupan layanan, dan tarif konsultasi Anda.</p>
-          <a routerLink="/portal/pro/services" class="inline-flex items-center gap-1.5 text-xs text-brand-400 font-semibold hover:underline">
+          <h3 class="text-base font-semibold text-white font-heading">Kelola Layanan Hukum</h3>
+          <p class="text-xs text-white/60 leading-relaxed">Perbarui rincian spesialisasi, cakupan layanan, dan tarif konsultasi Anda.</p>
+          <a routerLink="/portal/pro/services" class="inline-flex items-center gap-1.5 text-xs text-brand-400 font-semibold hover:underline pt-2">
             <span>Sunting Katalog Layanan</span>
             <app-icon name="arrow-right" size="xs"></app-icon>
           </a>

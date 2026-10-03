@@ -21,3 +21,12 @@ export * from './empty-state/empty-state.component';
 export * from './alert/alert.component';
 export * from './pagination/pagination.component';
 export * from './divider/divider.component';
+
+// Portal UI System Additions
+export * from './kpi-card/kpi-card.component';
+export * from './status-badge/status-badge.component';
+export * from './portal-page-header/portal-page-header.component';
+export * from './dropdown/dropdown-menu.component';
+export * from './confirmation-dialog/confirmation-dialog.component';
+export * from './data-table/data-table.component';
+export * from './filter-bar/filter-bar.component';
