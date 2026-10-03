@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IconComponent } from '../icon/icon.component';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'gold' | 'outline' | 'ghost' | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 @Component({
   selector: 'app-button',
@@ -27,13 +27,13 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
       </span>
 
       <!-- Prefix Icon -->
-      <app-icon *ngIf="icon && !loading" [name]="icon" size="sm" class="mr-2" aria-hidden="true"></app-icon>
+      <app-icon *ngIf="(icon || iconLeft) && !loading" [name]="icon || iconLeft || ''" size="sm" class="mr-1.5" aria-hidden="true"></app-icon>
 
       <!-- Content slot -->
       <span class="inline-block"><ng-content></ng-content></span>
 
       <!-- Suffix Icon -->
-      <app-icon *ngIf="suffixIcon && !loading" [name]="suffixIcon" size="sm" class="ml-2" aria-hidden="true"></app-icon>
+      <app-icon *ngIf="suffixIcon && !loading" [name]="suffixIcon" size="sm" class="ml-1.5" aria-hidden="true"></app-icon>
     </button>
   `
 })
@@ -44,6 +44,7 @@ export class ButtonComponent {
   @Input({ transform: booleanAttribute }) disabled = false;
   @Input({ transform: booleanAttribute }) loading = false;
   @Input() icon?: string;
+  @Input() iconLeft?: string;
   @Input() suffixIcon?: string;
   @Input({ transform: booleanAttribute }) fullWidth = false;
   @Input() className = '';
@@ -51,9 +52,10 @@ export class ButtonComponent {
   @Output() btnClick = new EventEmitter<MouseEvent>();
 
   get buttonClasses(): string {
-    const base = 'inline-flex items-center justify-center font-medium min-h-touch rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm active:scale-[0.98] select-none';
+    const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm active:scale-[0.98] select-none';
     
     const sizes = {
+      xs: 'px-2.5 py-1 text-xs rounded-lg min-h-[30px]',
       sm: 'px-3 py-1.5 text-xs rounded-lg min-h-[38px]',
       md: 'px-5 py-2.5 text-sm min-h-[44px]',
       lg: 'px-6 py-3.5 text-base font-semibold rounded-2xl min-h-[50px]'

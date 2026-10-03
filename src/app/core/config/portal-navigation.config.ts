@@ -35,11 +35,14 @@ export const PRO_PORTAL_NAV: PortalNavConfig = {
   portalTitle: 'LegalConnect Advokat',
   portalRoleName: 'Legal Professional',
   items: [
-    { id: 'dashboard', label: 'Ringkasan Kinerja', route: '/portal/pro/dashboard', iconName: 'layout-dashboard' },
+    { id: 'dashboard', label: 'Overview', route: '/portal/pro/dashboard', iconName: 'layout-dashboard' },
+    { id: 'bookings', label: 'Bookings Klien', route: '/portal/pro/bookings', iconName: 'calendar-check', badge: '3 Baru', badgeVariant: 'gold' },
+    { id: 'calendar', label: 'Kalender Sesi', route: '/portal/pro/calendar', iconName: 'calendar' },
     { id: 'schedule', label: 'Jadwal & Ketersediaan', route: '/portal/pro/schedule', iconName: 'clock' },
-    { id: 'consultations', label: 'Konsultasi Klien', route: '/portal/pro/consultations', iconName: 'users', badge: '3 Baru', badgeVariant: 'gold' },
-    { id: 'case-notes', label: 'Catatan Kasus', route: '/portal/pro/case-notes', iconName: 'notebook-pen' },
     { id: 'services', label: 'Layanan Hukum Saya', route: '/portal/pro/services', iconName: 'briefcase' },
+    { id: 'clients', label: 'Daftar Klien', route: '/portal/pro/clients', iconName: 'users' },
+    { id: 'case-notes', label: 'Catatan Kasus', route: '/portal/pro/case-notes', iconName: 'notebook-pen' },
+    { id: 'reviews', label: 'Ulasan & Rating', route: '/portal/pro/reviews', iconName: 'star' },
     { id: 'profile', label: 'Profil & Verifikasi', route: '/portal/pro/profile', iconName: 'shield-check' }
   ]
 };

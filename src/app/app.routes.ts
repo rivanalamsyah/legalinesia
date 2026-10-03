@@ -199,16 +199,40 @@ export const routes: Routes = [
               import('./features/portal/pro/pro-dashboard.component').then(m => m.ProDashboardComponent)
           },
           {
+            path: 'bookings',
+            title: 'Portal Advokat - Bookings Klien',
+            loadComponent: () =>
+              import('./features/portal/pro/pro-bookings.component').then(m => m.ProBookingsComponent)
+          },
+          {
+            path: 'bookings/:id',
+            title: 'Portal Advokat - Detail Booking',
+            loadComponent: () =>
+              import('./features/portal/pro/pro-booking-detail.component').then(m => m.ProBookingDetailComponent)
+          },
+          {
+            path: 'calendar',
+            title: 'Portal Advokat - Kalender Sesi',
+            loadComponent: () =>
+              import('./features/portal/pro/pro-calendar.component').then(m => m.ProCalendarComponent)
+          },
+          {
             path: 'schedule',
             title: 'Portal Advokat - Jadwal & Ketersediaan',
             loadComponent: () =>
               import('./features/portal/pro/pro-schedule.component').then(m => m.ProScheduleComponent)
           },
           {
-            path: 'consultations',
-            title: 'Portal Advokat - Konsultasi Klien',
+            path: 'services',
+            title: 'Portal Advokat - Layanan Hukum Saya',
             loadComponent: () =>
-              import('./features/portal/pro/pro-consultations.component').then(m => m.ProConsultationsComponent)
+              import('./features/portal/pro/pro-services.component').then(m => m.ProServicesComponent)
+          },
+          {
+            path: 'clients',
+            title: 'Portal Advokat - Daftar Klien',
+            loadComponent: () =>
+              import('./features/portal/pro/pro-clients.component').then(m => m.ProClientsComponent)
           },
           {
             path: 'case-notes',
@@ -217,10 +241,10 @@ export const routes: Routes = [
               import('./features/portal/pro/pro-case-notes.component').then(m => m.ProCaseNotesComponent)
           },
           {
-            path: 'services',
-            title: 'Portal Advokat - Layanan Hukum Saya',
+            path: 'reviews',
+            title: 'Portal Advokat - Ulasan & Rating',
             loadComponent: () =>
-              import('./features/portal/pro/pro-services.component').then(m => m.ProServicesComponent)
+              import('./features/portal/pro/pro-reviews.component').then(m => m.ProReviewsComponent)
           },
           {
             path: 'profile',

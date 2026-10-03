@@ -48,6 +48,7 @@ export class IconButtonComponent {
     const base = 'inline-flex items-center justify-center rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-95 select-none';
     
     const sizes = {
+      xs: 'w-7 h-7 min-w-[28px] min-h-[28px] rounded-lg',
       sm: 'w-8 h-8 min-w-[32px] min-h-[32px] rounded-lg',
       md: 'w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl',
       lg: 'w-13 h-13 min-w-[52px] min-h-[52px] rounded-2xl'
