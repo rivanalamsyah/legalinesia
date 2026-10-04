@@ -3,23 +3,19 @@
  *
  * Wraps Firebase Auth SDK to provide:
  * - Email/password register & login
+ * - Google OAuth Sign-in (signInWithPopup)
  * - Auth state restoration on page reload
  * - User profile resolution from Firestore /users collection
- * - Logout
- * - Password reset request
+ * - Logout & password reset
  *
  * SECURITY PRINCIPLES:
- * - Role is ALWAYS read from Firestore /users/{uid}.role — never from client payload
+ * - Role is ALWAYS read from Firestore /users/{uid}.role — never trusted from client payload
  * - Auth state is the single source of truth for the Angular application
  * - Route guards consume this service for navigation (not security enforcement)
  * - Actual security enforcement is in Firestore Security Rules (server-side)
- *
- * INTEGRATION:
- * - AuthStateService is updated whenever auth state changes
- * - Components use AuthStateService signals; this service is the writer
  */
 
-import { Injectable, inject, signal, computed, effect } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   signInWithEmailAndPassword,
@@ -28,6 +24,8 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
   updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
   User as FirebaseUser
 } from 'firebase/auth';
 import {
@@ -61,8 +59,6 @@ export class FirebaseAuthService {
   public readonly authError = signal<string | null>(null);
 
   constructor() {
-    // Subscribe to Firebase Auth state changes
-    // This runs on every page load, login, and logout
     this.initAuthStateListener();
   }
 
@@ -143,7 +139,7 @@ export class FirebaseAuthService {
       return {
         ...base,
         role: UserRole.LEGAL_PRO,
-        title: '',               // Loaded from /professionals collection separately
+        title: '',
         barLicenseNumber: data.barLicenseNumber ?? '',
         specializations: [],
         yearsOfExperience: 0,
@@ -166,7 +162,6 @@ export class FirebaseAuthService {
       } as AdminProfile;
     }
 
-    // Fallback — should never happen with proper Firestore rules
     throw new Error(`[AuthService] Unknown role for uid ${uid}: ${data.role}`);
   }
 
@@ -178,6 +173,15 @@ export class FirebaseAuthService {
     this.authError.set(null);
     try {
       await signInWithEmailAndPassword(this.auth, email, password);
+      const uid = this.getCurrentUid();
+      if (uid) {
+        const profile = await this.resolveUserProfile(this.auth.currentUser!);
+        if (profile) {
+          this.authStateService.setUser(profile);
+          const targetRoute = this.authStateService.getPortalRouteForRole(profile.role);
+          this.router.navigate([targetRoute]);
+        }
+      }
       return { success: true };
     } catch (err) {
       const mapped = mapFirebaseError(err);
@@ -187,8 +191,56 @@ export class FirebaseAuthService {
   }
 
   /**
-   * Register new user and create Firestore user document.
-   * Role is set at registration and CANNOT be changed by client subsequently.
+   * Sign in with Google (OAuth popup).
+   * Creates Firestore user profile document if user logs in for the first time.
+   */
+  public async loginWithGoogle(desiredRole: 'CUSTOMER' | 'LEGAL_PRO' = 'CUSTOMER'): Promise<AuthResult> {
+    this.authError.set(null);
+    try {
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const credential = await signInWithPopup(this.auth, provider);
+      const uid = credential.user.uid;
+      const email = credential.user.email ?? '';
+      const fullName = credential.user.displayName ?? 'Pengguna Google';
+      const avatarUrl = credential.user.photoURL ?? undefined;
+
+      const userDocRef = doc(this.db, COLLECTIONS.USERS, uid);
+      const snapshot = await getDoc(userDocRef);
+
+      if (!snapshot.exists()) {
+        const userDoc: FirestoreUser = {
+          uid,
+          email,
+          fullName,
+          avatarUrl,
+          role: desiredRole as FirestoreUserRole,
+          status: desiredRole === 'LEGAL_PRO' ? 'pending' : 'active',
+          isEmailVerified: true,
+          createdAt: serverTimestamp() as Timestamp,
+          updatedAt: serverTimestamp() as Timestamp,
+        };
+        await setDoc(userDocRef, userDoc);
+      }
+
+      const updatedSnap = await getDoc(userDocRef);
+      if (updatedSnap.exists()) {
+        const profile = this.mapFirestoreUserToProfile(updatedSnap.data() as FirestoreUser, uid);
+        this.authStateService.setUser(profile);
+        const targetRoute = this.authStateService.getPortalRouteForRole(profile.role);
+        this.router.navigate([targetRoute]);
+      }
+
+      return { success: true };
+    } catch (err) {
+      const mapped = mapFirebaseError(err);
+      this.authError.set(mapped.userMessage);
+      return { success: false, error: mapped.userMessage };
+    }
+  }
+
+  /**
+   * Register new user with email and password and create Firestore user document.
    */
   public async register(
     fullName: string,
@@ -201,13 +253,8 @@ export class FirebaseAuthService {
       const credential = await createUserWithEmailAndPassword(this.auth, email, password);
       const uid = credential.user.uid;
 
-      // Update Firebase Auth profile display name
       await updateProfile(credential.user, { displayName: fullName });
 
-      // Create user document in Firestore
-      // IMPORTANT: role is written here by the client on first registration.
-      // For production, consider using Cloud Functions to validate role on write.
-      // Security Rules prevent future role changes by non-admin.
       const userDoc: FirestoreUser = {
         uid,
         email,
@@ -220,6 +267,11 @@ export class FirebaseAuthService {
       };
 
       await setDoc(doc(this.db, COLLECTIONS.USERS, uid), userDoc);
+
+      const profile = this.mapFirestoreUserToProfile(userDoc, uid);
+      this.authStateService.setUser(profile);
+      const targetRoute = this.authStateService.getPortalRouteForRole(profile.role);
+      this.router.navigate([targetRoute]);
 
       return { success: true };
     } catch (err) {
