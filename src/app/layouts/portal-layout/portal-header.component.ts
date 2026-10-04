@@ -35,7 +35,7 @@ import { DropdownMenuComponent, DropdownMenuItem } from '../../shared/components
         </div>
       </div>
 
-      <!-- Right: Notifications & Real User Profile Menu -->
+      <!-- Right: Notifications, User Profile & Quick Logout Button -->
       <div class="flex items-center gap-3">
 
         <!-- Notification Bell Dropdown -->
@@ -84,6 +84,17 @@ import { DropdownMenuComponent, DropdownMenuItem } from '../../shared/components
           </app-dropdown-menu>
         }
 
+        <!-- Direct Logout Action Button -->
+        <button
+          type="button"
+          (click)="onDirectLogout()"
+          title="Keluar Akun (Logout)"
+          aria-label="Keluar Akun"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-xs font-semibold transition-all">
+          <app-icon name="log-out" size="xs"></app-icon>
+          <span class="hidden sm:inline">Keluar</span>
+        </button>
+
       </div>
 
     </header>
@@ -127,6 +138,10 @@ export class PortalHeaderComponent {
 
   public onSelectNotification(item: DropdownMenuItem): void {
     // Handle notification action
+  }
+
+  public async onDirectLogout(): Promise<void> {
+    await this.firebaseAuth.logout();
   }
 
   public async onSelectUserItem(item: DropdownMenuItem): Promise<void> {

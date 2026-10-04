@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { PortalNavConfig } from '../../core/config/portal-navigation.config';
 import { IconComponent } from '../../shared/components/ui/icon/icon.component';
 import { BadgeComponent } from '../../shared/components/ui/badge/badge.component';
+import { FirebaseAuthService } from '../../core/firebase/firebase-auth.service';
 
 @Component({
   selector: 'app-portal-sidebar',
@@ -98,18 +99,31 @@ import { BadgeComponent } from '../../shared/components/ui/badge/badge.component
         }
       </nav>
 
-      <!-- Sidebar Footer -->
-      <div class="p-3 border-t border-navy-800/60">
+      <!-- Sidebar Footer (Website Link & Dedicated Logout Button) -->
+      <div class="p-3 border-t border-navy-800/60 space-y-1">
         <a
           routerLink="/"
           [title]="isCollapsed ? 'Kembali ke Website' : ''"
-          class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium text-white/50 hover:text-white hover:bg-white/5 transition-colors min-h-[44px]"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-white/50 hover:text-white hover:bg-white/5 transition-colors min-h-[40px]"
           [ngClass]="isCollapsed ? 'justify-center' : ''">
           <app-icon name="arrow-left" size="xs" className="shrink-0"></app-icon>
           @if (!isCollapsed) {
             <span class="whitespace-nowrap">Website Publik</span>
           }
         </a>
+
+        <!-- Logout Button -->
+        <button
+          type="button"
+          (click)="onLogout()"
+          [title]="isCollapsed ? 'Keluar Akun' : ''"
+          class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 border border-rose-500/20 transition-all min-h-[40px]"
+          [ngClass]="isCollapsed ? 'justify-center' : ''">
+          <app-icon name="log-out" size="xs" className="shrink-0"></app-icon>
+          @if (!isCollapsed) {
+            <span class="whitespace-nowrap">Keluar Akun</span>
+          }
+        </button>
       </div>
 
     </aside>
@@ -122,4 +136,11 @@ export class PortalSidebarComponent {
 
   @Output() closeSidebar = new EventEmitter<void>();
   @Output() toggleCollapse = new EventEmitter<void>();
+
+  private readonly firebaseAuth = inject(FirebaseAuthService);
+
+  public async onLogout(): Promise<void> {
+    this.closeSidebar.emit();
+    await this.firebaseAuth.logout();
+  }
 }
