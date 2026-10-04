@@ -11,6 +11,7 @@
 - [Visi & Tujuan Produk](#-visi--tujuan-produk)
 - [Fitur Utama](#-fitur-utama)
 - [Arsitektur & Struktur Proyek](#-arsitektur--struktur-proyek)
+- [Arsitektur Backend Firebase & Keamanan](#-arsitektur-backend-firebase--keamanan)
 - [Teknologi & Dependensi (Tech Stack)](#-teknologi--dependensi-tech-stack)
 - [Prasyarat Sistem (Prerequisites)](#-prasyarat-sistem-prerequisites)
 - [Panduan Instalasi & Jalankan Lokal](#-panduan-instalasi--jalankan-lokal)
@@ -58,145 +59,166 @@ Website ini dibangun menggunakan **Angular 19** standalone components, **Tailwin
 - **Penilaian & Testimoni Transparan**: Sistem ulasan terverifikasi untuk memastikan reputasi advokat.
 
 ### 📅 4. Sistem Alur Booking & Penjadwalan (Consultation Booking)
-- **Multi-step Booking Form**: Proses mudah memilih paket konsultasi (Chat, Video Call, atau Tatap Muka), tanggal, jam ketersediaan, serta pengunggahan dokumen pendukung.
-- **Konfirmasi & Ringkasan Transaksi**: Rincian biaya transparan sebelum melakukan pembayaran.
+- **4-Step Booking Wizard**: Pilih jenis konsultasi (Video Online / Tatap Muka / Review Dokumen), tentukan tanggal & jam ketersediaan advokat, isi detail ringkasan kasus, dan upload dokumen pendukung.
+- **Order Summary & Confirmation Modal**: Ringkasan biaya transparan tanpa biaya tersembunyi.
+- **Manual Bank Transfer & VA Integration**: Referensi nomor Virtual Account otomatis beserta langkah konfirmasi pembayaran manual.
 
-### 📚 5. Insight & Edukasi Hukum (Legal Insights & Articles)
-- **Pusat Edukasi Hukum**: Artikel, panduan praktis, analisis regulasi terbaru, dan *case studies* hukum bisnis/perorangan.
-- **Kategori & Pencarian Artikel**: Memudahkan pembaca menemukan materi edukasi relevan.
-- **Rekomendasi Artikel & Penulis Advokat**: Terintegrasi langsung dengan profil advokat penyusun artikel.
+### 👤 5. Customer Portal
+- **Dashboard Overview**: Metric card (Total Konsultasi, Konsultasi Mendatang, Pembayaran Pending, Selesai) dan *Upcoming Consultation Card*.
+- **My Bookings & Detail View**: Manajemen alur konsultasi, tombol ruang video meeting, dan linimasa status.
+- **Consultation Results & Documents**: Akses dokumen hasil review dan catatan konsultasi hukum dari advokat.
+- **Reviews & Notifications**: Beri ulasan untuk sesi selesai dan kelola notifikasi real-time.
 
-### 🔐 6. Autentikasi & Akun Pengguna
-- **Halaman Masuk (Login), Daftar (Register), & Lupa Password**: Desain antarmuka *auth* yang elegan dan responsif.
-- **Dukungan Role**: Arsitektur yang siap diintegrasikan dengan role Klien, Advokat, dan Administrator.
+### ⚖️ 6. Legal Professional Portal
+- **Professional Overview**: Hari ini schedule, upcoming bookings, pending requests, dan review summary.
+- **Bookings Management**: Terima/tolak permintaan konsultasi, perbarui status booking, dan input link Google Meet / Zoom.
+- **Calendar & Availability Builder**: Atur jadwal ketersediaan mingguan dengan pendeteksi otomatis slot bertabrakan (*overlap detection*).
+- **Consultation Notes Writer**: Tulis analisis hukum, rekomendasi, dan tindakan lanjutan untuk klien.
 
-### ⚠️ 7. Penanganan Kesalahan (Error Management)
-- **Halaman 404 (Not Found)** & **500 (Server Error)** tersustomasi sesuai tema visual Legalinesia.
+### 🔐 7. Admin CMS
+- **Operational Overview**: Metric platform, alert operasional, booking terbaru, dan pending verification.
+- **Content Management (CMS)**: Pengelolaan Practice Areas taxonomy, Legal Services catalog, Legal Insights/Articles, FAQ, dan Testimonials.
+- **Operations & Moderation**: Verifikasi pembayaran manual, konfirmasi/pembatalan booking, dan moderasi ulasan publik.
+- **User & Verification Management**: Verifikasi lisensi advokat (PERADI/KAI) dan pengawasan akun pengguna.
 
 ---
 
-## 📁 Arsitektur & Struktur Proyek
-
-Proyek ini menerapkan arsitektur **Clean Architecture & Modular Domain-Driven Design (DDD)** pada Angular 19:
+## 🧱 Arsitektur & Struktur Proyek
 
 ```text
 legalinesia/
+├── firebase.json                 # Konfigurasi Firebase Hosting, Rules, Indexes, Emulator
+├── .firebaserc                   # Target Firebase Project ID
+├── firestore.rules               # Firestore Security Rules (RBAC, Ownership, State Machine)
+├── firestore.indexes.json        # Composite Index Firestore
+├── .env.example                  # Template variabel lingkungan client
+├── scripts/
+│   └── seed-firestore.mjs        # Script seeder data awal Firestore
 ├── src/
 │   ├── app/
-│   │   ├── core/                        # Modul Core (Singleton Services, Guards, Interceptors)
-│   │   │   ├── config/                  # Konfigurasi aplikasi & konstanta global
-│   │   │   ├── error-handler/           # Global Error Handler & Logging
-│   │   │   ├── guards/                  # Route guards (AuthGuard, RoleGuard)
-│   │   │   ├── interceptors/            # HTTP Interceptors (Auth, Error, Loading)
-│   │   │   ├── models/                  # Interface & TypeScript Models
-│   │   │   ├── repositories/            # Repository pattern untuk abstraksi data
-│   │   │   └── services/                # Core Business Services (SEO, Auth, Notification, Data)
-│   │   │
-│   │   ├── features/                    # Modul Fitur Aplikasi (Domain-based)
-│   │   │   ├── error/                   # Halaman 404 Not Found & Server Error
-│   │   │   └── public/                  # Fitur Halaman Publik
-│   │   │       ├── about/               # Halaman Tentang Kami
-│   │   │       ├── auth/                # Halaman Login, Register, Forgot Password
-│   │   │       ├── booking/             # Halaman Penjadwalan Konsultasi
-│   │   │       ├── contact/             # Halaman Kontak & Lokasi Kantor
-│   │   │       ├── faq/                 # Halaman Pertanyaan Umum
-│   │   │       ├── home/                # Halaman Utama (Homepage)
-│   │   │       ├── how-it-works/        # Halaman Cara Kerja Platform
-│   │   │       ├── insights/            # Halaman Artikel & Edukasi Hukum
-│   │   │       ├── professionals/       # Halaman Direktori & Profil Advokat
-│   │   │       └── services/            # Halaman Catalog & Detail Layanan Hukum
-│   │   │
-│   │   ├── layouts/                     # Layout Shell Aplikasi
-│   │   │   └── public-layout/           # Public Layout (Header, Mega Menu, Footer, Shell)
-│   │   │
-│   │   ├── shared/                      # UI Components, Directives & Pipes Reusable
-│   │   │   └── components/ui/           # Reusable Atomic UI Components (Button, Input, Badge, Card, Modal, Empty State, etc.)
-│   │   │
-│   │   ├── app.component.ts             # Root Component
-│   │   ├── app.config.ts                # Application Configuration (Providers, Routes)
-│   │   └── app.routes.ts                # Deklarasi Routing & Page Title Strategy
-│   │
-│   ├── assets/                          # Static Assets (Gambar, Ikon, Ilustrasi, Fonts)
-│   ├── index.html                       # HTML Template Root dengan SEO Meta Tags & OpenGraph
-│   ├── main.ts                          # App Entrypoint
-│   └── styles.css                       # Global Styles, CSS Custom Properties & Design Tokens
-│
-├── angular.json                         # Konfigurasi Angular CLI Build & Workspace
-├── package.json                         # Dependensi NPM & Script Perintah
-├── postcss.config.js                    # Konfigurasi PostCSS
-├── tailwind.config.js                   # Konfigurasi Design System Tailwind CSS & Tokens
-├── tsconfig.json                        # Konfigurasi Kompiler TypeScript
-└── README.md                            # Dokumentasi Utama Proyek
+│   │   ├── core/
+│   │   │   ├── config/           # App, Router, & Firebase DI Config
+│   │   │   ├── firebase/         # Firebase SDK services & Firestore Repositories
+│   │   │   │   ├── firebase.app.ts
+│   │   │   │   ├── firebase.config.ts
+│   │   │   │   ├── firestore.types.ts
+│   │   │   │   ├── firebase-error.handler.ts
+│   │   │   │   ├── firebase-auth.service.ts
+│   │   │   │   ├── firestore-booking.service.ts
+│   │   │   │   ├── firestore-payment.service.ts
+│   │   │   │   ├── firestore-review.service.ts
+│   │   │   │   ├── firestore-notification.service.ts
+│   │   │   │   ├── firestore-availability.service.ts
+│   │   │   │   ├── firestore-public.service.ts
+│   │   │   │   └── firestore-user.service.ts
+│   │   │   ├── guards/           # Auth, Role, & Permission Guards
+│   │   │   ├── models/           # Domain models & state machine
+│   │   │   └── services/         # Angular facade services
+│   │   ├── features/             # Feature Modules (Public, Customer, Pro, Admin)
+│   │   ├── layouts/              # Platform & Portal Shell Layouts
+│   │   └── shared/               # Reusable UI Design System & Domain Components
+│   └── environments/             # Environment configs (dev, prod, emulator)
+```
+
+---
+
+## 💥 Arsitektur Backend Firebase & Keamanan
+
+### 1. Firebase Identity & Authentication Layer
+* **Service**: `FirebaseAuthService` (`src/app/core/firebase/firebase-auth.service.ts`).
+* **Fitur**: Login Email/Password, Registrasi Akun Baru, Logout, Reset Password, dan Pemulihan Sesi Otomatis (`onAuthStateChanged`).
+* **Prinsip Keamanan Role**: Role pengguna **TIDAK PERNAH** dipercayai dari input client/payload registrasi. Setiap role selalu divalidasi dan dibaca dari dokumen Firestore `/users/{uid}.role` yang dikelola secara server-side.
+
+### 2. Role-Based Access Control (RBAC) & Principle of Least Privilege
+Setiap koleksi Firestore dilindungi oleh **[`firestore.rules`](file:///d:/legalinesia/firestore.rules)** dengan kebijakan *Default Deny* (`allow read, write: if false;`).
+
+| Role | Akses Koleksi & Resource | Batasan & Aturan Keamanan |
+| :--- | :--- | :--- |
+| **Public / Unauthenticated** | Read-only `/practice_areas`, `/legal_services`, `/articles`, `/faqs`, `/testimonials`, `/professionals` (active/verified only). | Tidak dapat membaca data privat pengguna, booking, atau pembayaran. |
+| **Customer** | Full access pada data milik sendiri (`customerId == auth.uid`) di `/bookings`, `/payments`, `/notifications`, `/reviews`. | Tidak dapat mengubah status pembayaran ke `PAID` secara langsung (harus via `VERIFYING` admin), tidak dapat mengubah `role` akun. |
+| **Legal Professional** | Full access pada data milik sendiri (`professionalId == auth.uid`) di `/bookings`, `/availability`, `/consultation_notes`, `/reviews`. | Tidak dapat mengubah status verifikasi lisensi diri sendiri, tidak dapat mengakses booking advokat lain. |
+| **Admin** | Full operational access pada seluruh koleksi (`users`, `professionals`, `bookings`, `payments`, `reviews`, `cms`). | Mengelola verifikasi advokat, verifikasi pembayaran manual, moderasi review, dan master data. |
+
+### 3. Firestore Collections Schema Overview
+* `/users/{uid}`: Schema pengguna (uid, email, fullName, phoneNumber, role, status, createdAt, updatedAt).
+* `/professionals/{uid}`: Metadata advokat (title, barLicenseNumber, specializations, yearsOfExperience, consultationFee, isVerified, rating, reviewCount).
+* `/bookings/{bookingId}`: Transaksi booking konsisten dengan snapshot data (`customerSnapshot`, `professionalSnapshot`, `serviceSnapshot`, `timeline`).
+* `/payments/{paymentId}`: Rekaman transaksi pembayaran (amount, virtualAccountNumber, status: `WAITING_PAYMENT` | `VERIFYING` | `PAID` | `FAILED`).
+* `/availability/{slotId}`: Slot waktu ketersediaan mingguan advokat.
+* `/reviews/{reviewId}`: Ulasan terverifikasi (hanya untuk booking `COMPLETED`).
+* `/notifications/{notifId}`: Notifikasi in-app real-time per user.
+* `/practice_areas`, `/legal_services`, `/articles`, `/faqs`, `/testimonials`: Master data CMS.
+
+### 4. Booking State Machine
+Sistem menerapkan alur transisi status booking yang ketat:
+```text
+REQUESTED ➔ UNDER_REVIEW ➔ WAITING_PAYMENT ➔ PAYMENT_VERIFIED ➔ CONFIRMED ➔ IN_SESSION ➔ COMPLETED
+   │             │               │
+   ├─ REJECTED   ├─ REJECTED     └─ CANCELLED
+   └─ CANCELLED  └─ CANCELLED
+```
+
+### 5. Firebase Emulator Suite & Lokal Testing
+Proyek menyediakan dukungan penuh untuk **Firebase Emulator Suite** (Auth: port `9099`, Firestore: port `8080`, UI: port `4000`).
+```bash
+# Jalankan Firebase Emulator Suite secara lokal
+npm run emulators
+
+# Jalankan seeder data awal ke Firestore lokal/emulator
+npm run seed
 ```
 
 ---
 
 ## 🛠️ Teknologi & Dependensi (Tech Stack)
 
-| Kategori | Teknologi / Framework | Versi | Kegunaan |
-| :--- | :--- | :--- | :--- |
-| **Frontend Framework** | Angular (Standalone Components) | `^19.1.0` | Framework utama aplikasi web |
-| **Bahasa Pemrograman** | TypeScript | `~5.7.2` | Type-safe JavaScript |
-| **Styling & Design System** | Tailwind CSS + PostCSS | `^3.4.17` | Utility-first CSS Framework & Design Tokens |
-| **Icons Set** | Lucide Angular | `^0.475.0` | Set ikon vektor modern & konsisten |
-| **Reactive State** | RxJS | `~7.8.0` | Pemrosesan stream data asinkron |
-| **Testing Framework** | Vitest / Angular CLI Test | `^19.1.0` | Unit test & integrasi komponen |
-| **Build System** | Angular CLI / Esbuild | `^19.1.0` | Perangkat kompilasi & bundler produksi |
+### Core Technologies
+- **Angular**: v19.1.0 (Standalone Components, Signals, Computed, Effects, New Control Flow `@if` / `@for`)
+- **Firebase**: v11.10.0 (Web SDK: Firebase Auth & Cloud Firestore)
+- **TypeScript**: v5.7.2 (Strict Type Checking)
+- **CSS Engine**: Vanilla CSS Design Tokens + Tailwind CSS v3.4.17
+- **Icon System**: `lucide-angular` v0.475.0 (Accessibility-ready SVG icons)
+- **Reactive Extensions**: `rxjs` v7.8.0
 
 ---
 
 ## 💻 Prasyarat Sistem (Prerequisites)
 
-Sebelum memulai instalasi dan menjalankan proyek ini di lingkungan lokal Anda, pastikan sistem komputer telah terpasang:
-
-- **Node.js**: Versi `v18.19.0` atau `v20.x` (LTS direkomendasikan).
-- **NPM**: Versi `^9.0.0` atau lebih baru (biasanya otomatis terpasang bersama Node.js).
-- **Angular CLI**: Versi `^19.0.0` (Opsional, dapat menggunakan `npx ng`).
-- **Git**: Versi terbaru untuk kontrol versi.
-
-Untuk memeriksa versi Node.js dan NPM di terminal Anda:
-```bash
-node -v
-npm -v
-```
+Sebelum menjalankan proyek, pastikan lingkungan pengembangan Anda memenuhi persyaratan berikut:
+- **Node.js**: `v18.x` atau `v20.x` (Direkomendasikan Node.js v20 LTS)
+- **npm**: `v9.x` atau `v10.x`
+- **Angular CLI**: `v19.x` (`npm i -g @angular/cli@19`)
 
 ---
 
 ## 🚀 Panduan Instalasi & Jalankan Lokal
 
-Ikuti langkah-langkah berikut untuk mengkloning dan menjalankan proyek di lingkungan pengembangan lokal (*local development environment*):
+1. **Clone Repository**:
+   ```bash
+   git clone https://github.com/rivanalamsyah/legalinesia.git
+   cd legalinesia
+   ```
 
-### 1. Kloning Repository
-```bash
-git clone https://github.com/rivanalamsyah/legalinesia.git
-cd legalinesia
-```
+2. **Instal Dependensi**:
+   ```bash
+   npm install
+   ```
 
-### 2. Instalasi Dependensi
-Jalankan perintah berikut untuk menginstal seluruh dependensi paket yang dibutuhkan:
-```bash
-npm install
-```
+3. **Konfigurasi Environment**:
+   Salin `.env.example` menjadi `.env` jika memerlukan penyesuaian credential Firebase lokal:
+   ```bash
+   cp .env.example .env
+   ```
 
-### 3. Jalankan Server Pengembangan (Development Server)
-Jalankan server lokal Angular:
-```bash
-npm start
-```
-atau menggunakan Angular CLI secara langsung:
-```bash
-ng serve
-```
-
-Setelah proses kompilasi selesai, buka peramban (*browser*) Anda dan akses:
-```text
-http://localhost:4200/
-```
-Aplikasi akan secara otomatis melakukan *hot-reload* setiap kali Anda mengubah file sumber (*source code*).
+4. **Jalankan Server Pengembang (Development Server)**:
+   ```bash
+   npm start
+   ```
+   Buka peramban dan akses [http://localhost:4200](http://localhost:4200).
 
 ---
 
-## 📜 Perintah Utilitas (Scripts & Commands)
+## ⚡ Perintah Utilitas (Scripts & Commands)
 
 Berikut adalah daftar perintah npm yang tersedia dalam proyek ini:
 
@@ -213,8 +235,11 @@ npm run watch
 # Jalankan pengujian unit (unit tests)
 npm test
 
-# Generate komponen Angular baru
-npx ng g c features/public/nama-komponen
+# Jalankan Firebase Emulator Suite lokal (Auth & Firestore)
+npm run emulators
+
+# Jalankan script seeder data master Firestore
+npm run seed
 ```
 
 ---
@@ -222,13 +247,12 @@ npx ng g c features/public/nama-komponen
 ## 🧪 Panduan Pengujian & Kualitas Kode
 
 ### 1. Pengujian Unit (Unit Testing)
-Proyek ini mengintegrasikan runner pengujian Angular modern berbasis **Vitest**. Untuk menjalankan seluruh suite tes:
 ```bash
 npm test
 ```
 
 ### 2. Pemeriksaan Tipe & Linter (TypeScript Verification)
-Untuk memastikan tidak ada kesalahan tipe data TypeScript sebelum membuat *pull request*:
+Untuk memastikan tidak ada kesalahan tipe data TypeScript:
 ```bash
 npx tsc --noEmit
 ```
@@ -252,6 +276,13 @@ npx tsc --noEmit
 
 ---
 
+## ⚠️ Known Limitations & Architecture Decisions
+1. **Client-Only Architecture (Tanpa Cloud Functions)**: Proyek MVP ini dirancang menggunakan Firebase Web SDK & Firestore Security Rules tanpa mengandalkan Node.js Cloud Functions.
+2. **Manual Bank Transfer Verification**: Pembayaran menggunakan sistem transfer bank manual dengan referensi Virtual Account. Verifikasi status `PAID` memerlukan tindakan manual Admin melalui Admin CMS.
+3. **Advisory Schedule Overlap Checks**: Pemeriksaan bentrok jadwal ketersediaan advokat dilakukan pada level client service & UI.
+
+---
+
 ## 🔀 Panduan Kontribusi & Git Workflow
 
 Kami menyambut kontribusi dari para pengembang! Untuk menjaga kualitas basis kode, ikuti alur kerja (*workflow*) berikut:
@@ -268,7 +299,7 @@ Kami menyambut kontribusi dari para pengembang! Untuk menjaga kualitas basis kod
 3. **Pemeriksaan Sebelum Commit**: Pastikan pengujian lokal dan pembentukan *build* berhasil:
    ```bash
    npm run build
-   npm test
+   npx tsc --noEmit
    ```
 4. **Push & Pull Request (PR)**: Kirimkan cabang Anda ke repository remote dan buat Pull Request dengan deskripsi perubahan yang jelas.
 
