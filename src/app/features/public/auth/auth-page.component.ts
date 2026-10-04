@@ -132,21 +132,7 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
                   <label for="reg-password" class="block text-xs font-semibold text-white/70 uppercase tracking-wide mb-1.5">Kata Sandi</label>
                   <input id="reg-password" type="password" formControlName="password" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="Minimal 8 karakter" autocomplete="new-password" />
                 </div>
-                <div>
-                  <label class="block text-xs font-semibold text-white/70 uppercase tracking-wide mb-2">Daftar Sebagai</label>
-                  <div class="grid grid-cols-2 gap-3">
-                    <label class="flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-colors"
-                      [ngClass]="registerForm.get('role')?.value === 'CUSTOMER' ? 'border-brand-400 bg-brand-900/50' : 'border-white/20'">
-                      <input type="radio" formControlName="role" value="CUSTOMER" class="text-brand-500" />
-                      <span class="text-sm text-white">Klien</span>
-                    </label>
-                    <label class="flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-colors"
-                      [ngClass]="registerForm.get('role')?.value === 'LEGAL_PRO' ? 'border-brand-400 bg-brand-900/50' : 'border-white/20'">
-                      <input type="radio" formControlName="role" value="LEGAL_PRO" class="text-brand-500" />
-                      <span class="text-sm text-white">Advokat</span>
-                    </label>
-                  </div>
-                </div>
+
                 <div class="flex items-start gap-2">
                   <input id="reg-terms" type="checkbox" formControlName="termsAccepted" class="mt-0.5 rounded" />
                   <label for="reg-terms" class="text-xs text-white/60 leading-relaxed">
@@ -184,7 +170,6 @@ export class AuthPageComponent {
     fullName: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
-    role: ['CUSTOMER', Validators.required],
     termsAccepted: [false, Validators.requiredTrue]
   });
 
@@ -228,9 +213,8 @@ export class AuthPageComponent {
     const fullName = this.registerForm.get('fullName')?.value;
     const email = this.registerForm.get('email')?.value;
     const password = this.registerForm.get('password')?.value;
-    const role = this.registerForm.get('role')?.value as 'CUSTOMER' | 'LEGAL_PRO';
 
-    const result = await this.firebaseAuth.register(fullName, email, password, role);
+    const result = await this.firebaseAuth.register(fullName, email, password, 'CUSTOMER');
     this.isLoading = false;
 
     if (!result.success) {
