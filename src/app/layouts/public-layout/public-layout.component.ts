@@ -29,23 +29,6 @@ import { LoadingService } from '../../core/services/loading.service';
       role="progressbar"
       aria-label="Memuat halaman"></div>
 
-    <!-- Announcement Bar Layer -->
-    <div
-      *ngIf="showAnnouncement()"
-      class="bg-gradient-to-r from-brand-900 via-brand-800 to-navy-900 text-white text-xs md:text-sm py-2 px-4 text-center relative z-50 flex items-center justify-center gap-2 border-b border-white/10">
-      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-      <span class="font-medium">
-        Konsultasi Hukum Online 24/7 bersama Advokat PERADI — Respons Cepat & Garansi Transparan.
-      </span>
-      <button
-        type="button"
-        class="ml-3 p-1 rounded hover:bg-white/10 transition-colors text-white/70 hover:text-white"
-        (click)="dismissAnnouncement()"
-        aria-label="Tutup pengumuman">
-        <app-icon name="x" size="xs"></app-icon>
-      </button>
-    </div>
-
     <!-- Global Navigation Header Shell -->
     <app-public-header></app-public-header>
 
@@ -75,7 +58,6 @@ export class PublicLayoutComponent implements OnInit {
   protected readonly loadingService = inject(LoadingService);
   private readonly router = inject(Router);
 
-  public readonly showAnnouncement = signal<boolean>(true);
   public readonly showScrollTop = signal<boolean>(false);
   public readonly isNavigating = signal<boolean>(false);
 
@@ -101,10 +83,6 @@ export class PublicLayoutComponent implements OnInit {
     if (typeof window !== 'undefined') {
       this.showScrollTop.set(window.scrollY > 400);
     }
-  }
-
-  public dismissAnnouncement(): void {
-    this.showAnnouncement.set(false);
   }
 
   public scrollToTop(): void {
