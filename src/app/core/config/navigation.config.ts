@@ -34,7 +34,6 @@ export const PUBLIC_NAVIGATION_CONFIG: NavigationConfig = {
     { label: 'Cara Kerja', route: '/how-it-works' },
     { label: 'Insight', route: '/insights' },
     { label: 'Tentang Kami', route: '/about' },
-    { label: 'FAQ', route: '/faq' },
   ],
   footerNav: {
     services: [
@@ -57,7 +56,7 @@ export const PUBLIC_NAVIGATION_CONFIG: NavigationConfig = {
       { label: 'Kode Etik Advokat', route: '/contact' },
     ],
     support: [
-      { label: 'Pusat Bantuan (FAQ)', route: '/faq' },
+      { label: 'Pusat Bantuan & FAQ', route: '/about' },
       { label: 'Artikel & Edukasi Hukum', route: '/insights' },
       { label: 'Mulai Konsultasi Online', route: '/booking' },
     ]
