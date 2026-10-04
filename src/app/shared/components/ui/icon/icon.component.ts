@@ -27,7 +27,7 @@ export class IconComponent {
   public normalizedName = computed(() => {
     if (!this.name) return 'circle-help';
     const n = this.name.trim().toLowerCase();
-    
+
     // Alias mapping for common legacy & renamed Lucide icon names
     const aliases: Record<string, string> = {
       'x-circle': 'circle-x',
@@ -54,7 +54,7 @@ export class IconComponent {
       'dashboard': 'layout-dashboard',
       'help': 'circle-help'
     };
-    
+
     return aliases[n] || n;
   });
 
@@ -64,7 +64,7 @@ export class IconComponent {
   public safeIconName = computed(() => {
     const nameToTest = this.normalizedName();
     if (!this.iconProviders || this.iconProviders.length === 0) return nameToTest;
-    
+
     // Check if any provider has this icon
     const exists = this.iconProviders.some(p => p.hasIcon && p.hasIcon(nameToTest));
     return exists ? nameToTest : 'circle-help';

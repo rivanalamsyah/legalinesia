@@ -14,7 +14,7 @@ export const MOCK_CUSTOMER_BOOKINGS: BookingItem[] = [
     professionalId: 'pro-demo-202',
     professionalName: 'Bambang Sutrisno, S.H., M.H.',
     professionalTitle: 'Advokat Senior & Konsultan Hukum Bisnis',
-    professionalAvatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80',
+    professionalAvatar: '/images/avatars/avatar-male-1.svg',
     barLicenseNumber: 'PERADI/2012/84729',
 
     serviceId: 'srv-1',
@@ -53,7 +53,7 @@ export const MOCK_CUSTOMER_BOOKINGS: BookingItem[] = [
     professionalId: 'lawyer-2',
     professionalName: 'Dr. Anisa Rahmawati, S.H., M.Kn.',
     professionalTitle: 'Advokat Specialist Hukum Keluarga & Waris',
-    professionalAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    professionalAvatar: '/images/avatars/avatar-female-1.svg',
     barLicenseNumber: 'PERADI/2015/92831',
 
     serviceId: 'srv-2',
@@ -88,7 +88,7 @@ export const MOCK_CUSTOMER_BOOKINGS: BookingItem[] = [
     professionalId: 'lawyer-3',
     professionalName: 'Hendra Wijaya, S.H., LL.M.',
     professionalTitle: 'Advokat Konsultan HKI & Cyber Law',
-    professionalAvatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+    professionalAvatar: '/images/avatars/avatar-male-2.svg',
 
     serviceId: 'srv-3',
     serviceTitle: 'Pendaftaran Merek & Hak Cipta (HKI)',

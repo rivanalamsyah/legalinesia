@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bgGradCust" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="skinGradCust" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d0c5"/>
+      <stop offset="100%" stop-color="#e2aa98"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="100" fill="url(#bgGradCust)"/>
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#60a5fa" stroke-width="2" stroke-opacity="0.3"/>
+  
+  <!-- Body Silhouette -->
+  <path d="M 35,195 Q 100,125 165,195 Z" fill="#ffffff" fill-opacity="0.9"/>
+  <!-- Head Silhouette -->
+  <circle cx="100" cy="85" r="35" fill="#ffffff" fill-opacity="0.9"/>
+</svg>

@@ -65,7 +65,7 @@ import { DropdownMenuComponent, DropdownMenuItem } from '../../shared/components
               class="flex items-center gap-2.5 pl-3 border-l border-navy-800/60 group">
               <div class="w-8 h-8 rounded-full bg-gradient-to-br from-brand-600 to-navy-700 p-0.5 shadow-sm group-hover:scale-105 transition-transform">
                 <img
-                  [src]="user.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'"
+                  [src]="user.avatarUrl || '/images/avatars/avatar-customer-default.svg'"
                   [alt]="user.fullName"
                   class="w-full h-full rounded-full object-cover" />
               </div>

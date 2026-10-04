@@ -86,17 +86,19 @@ import { MegaMenuComponent } from './mega-menu.component';
             }
           </div>
 
-          <!-- Mobile Menu Toggle -->
+          <!-- Mobile Menu Toggle Button (High Contrast & Clear Visibility) -->
           <button
             id="mobile-menu-toggle"
             type="button"
-            class="lg:hidden p-2 rounded-xl transition-colors min-h-touch min-w-touch"
-            [ngClass]="!isScrolled() ? 'text-white bg-white/10' : 'text-slate-800 hover:bg-slate-100'"
+            class="lg:hidden p-2.5 rounded-xl transition-all shadow-md flex items-center justify-center border"
+            [ngClass]="!isScrolled() 
+              ? 'bg-navy-950/80 text-white border-white/20 hover:bg-navy-900 backdrop-blur-md' 
+              : 'bg-brand-900 text-white border-brand-800 hover:bg-brand-950'"
             (click)="toggleMobileMenu()"
             [attr.aria-expanded]="isMobileMenuOpen()"
             aria-controls="mobile-nav"
             [attr.aria-label]="isMobileMenuOpen() ? 'Tutup menu' : 'Buka menu'">
-            <app-icon [name]="isMobileMenuOpen() ? 'x' : 'menu'" size="lg"></app-icon>
+            <app-icon [name]="isMobileMenuOpen() ? 'x' : 'menu'" size="lg" className="text-white"></app-icon>
           </button>
         </div>
       </div>
@@ -106,39 +108,50 @@ import { MegaMenuComponent } from './mega-menu.component';
         <app-mega-menu (closeMenu)="closeMegaMenu()"></app-mega-menu>
       </div>
 
-      <!-- Mobile Nav Drawer -->
+      <!-- Mobile Nav Drawer (Sleek Dark Theme) -->
       <div
         id="mobile-nav"
         role="navigation"
         aria-label="Navigasi Mobile"
         [class.hidden]="!isMobileMenuOpen()"
-        class="lg:hidden bg-white border-t border-slate-100 shadow-2xl animate-fadeIn">
+        class="lg:hidden bg-navy-950/95 backdrop-blur-xl border-t border-white/10 shadow-2xl animate-fadeIn text-white">
         
-        <nav class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+        <nav class="max-w-7xl mx-auto px-4 py-5 flex flex-col gap-1.5">
           @for (item of navItems; track item.route) {
             <a
               [routerLink]="item.route"
-              routerLinkActive="bg-brand-50 text-brand-700 font-semibold"
+              routerLinkActive="bg-brand-600/30 text-brand-300 font-semibold border-l-2 border-brand-400"
               [routerLinkActiveOptions]="{ exact: item.route === '/' }"
-              class="px-4 py-3 rounded-xl text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+              class="px-4 py-3 rounded-xl text-sm font-medium text-white/90 hover:bg-white/10 transition-colors flex items-center justify-between"
               (click)="closeAllMenus()">
-              {{ item.label }}
+              <span>{{ item.label }}</span>
+              <app-icon name="chevron-right" size="xs" className="text-white/40"></app-icon>
             </a>
           }
-          <div class="mt-3 pt-3 border-t border-slate-100 flex flex-col gap-2">
-            <a
-              [routerLink]="navConfig.authRoutes.login"
-              class="px-4 py-3 text-sm text-center font-medium text-slate-700 hover:bg-slate-50 rounded-xl transition-colors"
-              (click)="closeAllMenus()">
-              Masuk ke Akun
-            </a>
-            <app-button
-              [routerLink]="navConfig.authRoutes.register"
-              fullWidth
-              size="md"
-              (click)="closeAllMenus()">
-              Mulai Konsultasi Gratis
-            </app-button>
+          <div class="mt-3 pt-3 border-t border-white/10 flex flex-col gap-2">
+            @if (authState.isAuthenticated()) {
+              <a
+                [routerLink]="dashboardRoute()"
+                class="px-4 py-3 text-sm text-center font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl transition-colors shadow-md"
+                (click)="closeAllMenus()">
+                Buka Dashboard Saya
+              </a>
+            } @else {
+              <a
+                [routerLink]="navConfig.authRoutes.login"
+                class="px-4 py-3 text-sm text-center font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl transition-colors"
+                (click)="closeAllMenus()">
+                Masuk ke Akun
+              </a>
+              <app-button
+                [routerLink]="navConfig.authRoutes.register"
+                fullWidth
+                size="md"
+                variant="gold"
+                (click)="closeAllMenus()">
+                Konsultasi Gratis Sekarang
+              </app-button>
+            }
           </div>
         </nav>
       </div>
