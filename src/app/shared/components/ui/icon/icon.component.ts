@@ -1,6 +1,6 @@
-import { Component, Input, computed } from '@angular/core';
+import { Component, Input, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideAngularModule, LUCIDE_ICONS, LucideIconProviderInterface } from 'lucide-angular';
 
 @Component({
   selector: 'app-icon',
@@ -9,7 +9,7 @@ import { LucideAngularModule } from 'lucide-angular';
   template: `
     <span [class]="containerClasses()" [attr.aria-hidden]="true">
       <lucide-icon 
-        [name]="normalizedName()" 
+        [name]="safeIconName()" 
         [strokeWidth]="strokeWidth"
         class="w-full h-full text-current transition-colors">
       </lucide-icon>
@@ -22,23 +22,52 @@ export class IconComponent {
   @Input() strokeWidth = 1.8;
   @Input() className = '';
 
+  private readonly iconProviders = inject<LucideIconProviderInterface[]>(LUCIDE_ICONS, { optional: true });
+
   public normalizedName = computed(() => {
-    if (!this.name) return 'help-circle';
+    if (!this.name) return 'circle-help';
     const n = this.name.trim().toLowerCase();
     
-    // Alias mapping for common icon names across the project
+    // Alias mapping for common legacy & renamed Lucide icon names
     const aliases: Record<string, string> = {
-      'check-circle': 'check-circle-2',
+      'x-circle': 'circle-x',
+      'check-circle': 'circle-check',
+      'check-circle-2': 'circle-check',
+      'alert-circle': 'circle-alert',
+      'alert-triangle': 'triangle-alert',
+      'help-circle': 'circle-help',
+      'plus-circle': 'circle-plus',
+      'minus-circle': 'circle-minus',
+      'user-circle': 'circle-user',
+      'play-circle': 'circle-play',
+      'pause-circle': 'circle-pause',
+      'stop-circle': 'circle-stop',
+      'arrow-up-circle': 'circle-arrow-up',
+      'arrow-down-circle': 'circle-arrow-down',
+      'arrow-left-circle': 'circle-arrow-left',
+      'arrow-right-circle': 'circle-arrow-right',
+      'calendar-x': 'calendar-x-2',
+      'file-check': 'file-check-2',
       'trash': 'trash-2',
       'close': 'x',
       'logout': 'log-out',
       'dashboard': 'layout-dashboard',
-      'panel-left-open': 'panel-left-open',
-      'panel-left-close': 'panel-left-close',
-      'help': 'help-circle'
+      'help': 'circle-help'
     };
     
     return aliases[n] || n;
+  });
+
+  /**
+   * Ensure icon name exists in provider; fallback to circle-help if unknown to prevent runtime errors.
+   */
+  public safeIconName = computed(() => {
+    const nameToTest = this.normalizedName();
+    if (!this.iconProviders || this.iconProviders.length === 0) return nameToTest;
+    
+    // Check if any provider has this icon
+    const exists = this.iconProviders.some(p => p.hasIcon && p.hasIcon(nameToTest));
+    return exists ? nameToTest : 'circle-help';
   });
 
   public containerClasses = computed(() => {
