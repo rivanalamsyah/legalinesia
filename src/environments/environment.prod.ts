@@ -1,9 +1,6 @@
 /**
  * Production environment configuration.
- * Firebase credentials are injected at build/deploy time via CI/CD environment variables
- * or window runtime config.
- *
- * For Firebase Hosting deployment, client credentials are non-sensitive public values.
+ * Real Firebase project credentials for legalinesia1.
  */
 
 const getEnvVar = (key: string): string => {
@@ -22,11 +19,12 @@ export const environment = {
   useEmulator: false,
 
   firebase: {
-    apiKey: getEnvVar('FIREBASE_API_KEY') || 'FIREBASE_PROD_API_KEY',
-    authDomain: getEnvVar('FIREBASE_AUTH_DOMAIN') || 'legalinesia.firebaseapp.com',
-    projectId: getEnvVar('FIREBASE_PROJECT_ID') || 'legalinesia',
-    storageBucket: getEnvVar('FIREBASE_STORAGE_BUCKET') || 'legalinesia.appspot.com',
-    messagingSenderId: getEnvVar('FIREBASE_MESSAGING_SENDER_ID') || '123456789',
-    appId: getEnvVar('FIREBASE_APP_ID') || '1:123456789:web:prod',
+    apiKey: getEnvVar('FIREBASE_API_KEY') || 'AIzaSyD0toD_KPq3ttqAaHWiL_aleuUn0rK1iWw',
+    authDomain: getEnvVar('FIREBASE_AUTH_DOMAIN') || 'legalinesia1.firebaseapp.com',
+    projectId: getEnvVar('FIREBASE_PROJECT_ID') || 'legalinesia1',
+    storageBucket: getEnvVar('FIREBASE_STORAGE_BUCKET') || 'legalinesia1.firebasestorage.app',
+    messagingSenderId: getEnvVar('FIREBASE_MESSAGING_SENDER_ID') || '818889920291',
+    appId: getEnvVar('FIREBASE_APP_ID') || '1:818889920291:web:70da123c465ab563724696',
+    measurementId: getEnvVar('FIREBASE_MEASUREMENT_ID') || 'G-ZWXZHT22MD'
   }
 };

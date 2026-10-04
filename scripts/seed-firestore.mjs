@@ -1,7 +1,7 @@
 /**
  * Firestore Database Seeder Script
  *
- * Populates Firestore database with initial seed data:
+ * Populates Firestore database with initial seed data for legalinesia1:
  * - Practice Areas (/practice_areas)
  * - Legal Services (/legal_services)
  * - Legal Professionals (/professionals & /users)
@@ -16,14 +16,14 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
-// Replace with target Firebase project config if seeding live project
 const firebaseConfig = {
-  apiKey: process.env['FIREBASE_API_KEY'] || 'demo-api-key',
-  authDomain: process.env['FIREBASE_AUTH_DOMAIN'] || 'legalinesia-demo.firebaseapp.com',
-  projectId: process.env['FIREBASE_PROJECT_ID'] || 'legalinesia-demo',
-  storageBucket: process.env['FIREBASE_STORAGE_BUCKET'] || 'legalinesia-demo.appspot.com',
-  messagingSenderId: process.env['FIREBASE_MESSAGING_SENDER_ID'] || '123456789',
-  appId: process.env['FIREBASE_APP_ID'] || '1:123456789:web:abcdef'
+  apiKey: process.env['FIREBASE_API_KEY'] || 'AIzaSyD0toD_KPq3ttqAaHWiL_aleuUn0rK1iWw',
+  authDomain: process.env['FIREBASE_AUTH_DOMAIN'] || 'legalinesia1.firebaseapp.com',
+  projectId: process.env['FIREBASE_PROJECT_ID'] || 'legalinesia1',
+  storageBucket: process.env['FIREBASE_STORAGE_BUCKET'] || 'legalinesia1.firebasestorage.app',
+  messagingSenderId: process.env['FIREBASE_MESSAGING_SENDER_ID'] || '818889920291',
+  appId: process.env['FIREBASE_APP_ID'] || '1:818889920291:web:70da123c465ab563724696',
+  measurementId: process.env['FIREBASE_MEASUREMENT_ID'] || 'G-ZWXZHT22MD'
 };
 
 const app = initializeApp(firebaseConfig);
@@ -162,7 +162,7 @@ const FAQS = [
 ];
 
 async function seedData() {
-  console.log('🌱 Starting Firestore seed operation...');
+  console.log('🌱 Starting Firestore seed operation for legalinesia1...');
 
   try {
     // 1. Seed Practice Areas
@@ -198,7 +198,7 @@ async function seedData() {
       console.log(`  ✓ Seeded FAQ: ${faq.question}`);
     }
 
-    console.log('✅ Firestore seed completed successfully!');
+    console.log('✅ Firestore seed completed successfully for legalinesia1!');
   } catch (err) {
     console.error('❌ Error during Firestore seed:', err);
   }

@@ -1,24 +1,18 @@
 /**
  * Development environment configuration.
- * Firebase credentials for the DEVELOPMENT project.
- *
- * SECURITY: This file contains PUBLIC Firebase client config only.
- * Firebase client credentials (apiKey) are designed to be public —
- * security is enforced by Firebase Security Rules, NOT by keeping apiKey secret.
- *
- * DO NOT commit private keys, service account JSON, or admin SDK credentials.
- * Use Firebase Emulator for local development whenever possible.
+ * Real Firebase project credentials for legalinesia1.
  */
 export const environment = {
   production: false,
-  useEmulator: false, // set to true to use Firebase Emulator Suite locally
+  useEmulator: false,
 
   firebase: {
-    apiKey: 'YOUR_FIREBASE_API_KEY',
-    authDomain: 'YOUR_PROJECT_ID.firebaseapp.com',
-    projectId: 'YOUR_PROJECT_ID',
-    storageBucket: 'YOUR_PROJECT_ID.firebasestorage.app',
-    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-    appId: 'YOUR_APP_ID',
+    apiKey: "AIzaSyD0toD_KPq3ttqAaHWiL_aleuUn0rK1iWw",
+    authDomain: "legalinesia1.firebaseapp.com",
+    projectId: "legalinesia1",
+    storageBucket: "legalinesia1.firebasestorage.app",
+    messagingSenderId: "818889920291",
+    appId: "1:818889920291:web:70da123c465ab563724696",
+    measurementId: "G-ZWXZHT22MD"
   }
 };
