@@ -192,9 +192,9 @@ export class FirebaseAuthService {
 
   /**
    * Sign in with Google (OAuth popup).
-   * Creates Firestore user profile document if user logs in for the first time.
+   * Creates Firestore user profile document with CUSTOMER role if user logs in for the first time.
    */
-  public async loginWithGoogle(desiredRole: 'CUSTOMER' | 'LEGAL_PRO' = 'CUSTOMER'): Promise<AuthResult> {
+  public async loginWithGoogle(): Promise<AuthResult> {
     this.authError.set(null);
     try {
       const provider = new GoogleAuthProvider();
@@ -202,7 +202,7 @@ export class FirebaseAuthService {
       const credential = await signInWithPopup(this.auth, provider);
       const uid = credential.user.uid;
       const email = credential.user.email ?? '';
-      const fullName = credential.user.displayName ?? 'Pengguna Google';
+      const fullName = credential.user.displayName ?? 'Klien Legalinesia';
       const avatarUrl = credential.user.photoURL ?? undefined;
 
       const userDocRef = doc(this.db, COLLECTIONS.USERS, uid);
@@ -214,8 +214,9 @@ export class FirebaseAuthService {
           email,
           fullName,
           avatarUrl,
-          role: desiredRole as FirestoreUserRole,
-          status: desiredRole === 'LEGAL_PRO' ? 'pending' : 'active',
+          role: 'CUSTOMER', // Strictly CUSTOMER for all Google sign ins
+          status: 'active',
+          customerType: 'INDIVIDUAL',
           isEmailVerified: true,
           createdAt: serverTimestamp() as Timestamp,
           updatedAt: serverTimestamp() as Timestamp,

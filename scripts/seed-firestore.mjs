@@ -1,13 +1,16 @@
 /**
- * Firestore Database Seeder Script
+ * Firestore Database & Authentication Seeder Script
  *
- * Populates Firestore database with initial seed data for legalinesia1:
+ * Populates Firestore database and creates initial production seed accounts:
+ * 1. Admin Account: admin@legalinesia.id / Password123! (Role: ADMIN)
+ * 2. Advokat Account: advokat@legalinesia.id / Password123! (Role: LEGAL_PRO)
+ * 3. Klien Account: klien@legalinesia.id / Password123! (Role: CUSTOMER)
+ *
+ * Populates Master Collections:
  * - Practice Areas (/practice_areas)
  * - Legal Services (/legal_services)
- * - Legal Professionals (/professionals & /users)
- * - Articles / Insights (/articles)
  * - FAQs (/faqs)
- * - Demo Testimonials (/testimonials)
+ * - Initial Users (/users & /professionals)
  *
  * Usage:
  *   node scripts/seed-firestore.mjs
@@ -15,6 +18,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env['FIREBASE_API_KEY'] || 'AIzaSyD0toD_KPq3ttqAaHWiL_aleuUn0rK1iWw',
@@ -28,6 +32,41 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
+
+const SEED_USERS = [
+  {
+    email: 'admin@legalinesia.id',
+    password: 'Password123!',
+    fullName: 'Administrator Legalinesia',
+    role: 'ADMIN',
+    department: 'Platform Operations & Governance',
+    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    email: 'advokat@legalinesia.id',
+    password: 'Password123!',
+    fullName: 'Bambang Sutrisno, S.H., M.H.',
+    role: 'LEGAL_PRO',
+    title: 'Advokat Senior & Konsultan Hukum Bisnis',
+    barLicenseNumber: 'PERADI-198420-001',
+    organization: 'PERADI',
+    yearsOfExperience: 12,
+    rating: 4.9,
+    reviewCount: 28,
+    consultationFee: 350000,
+    avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    email: 'klien@legalinesia.id',
+    password: 'Password123!',
+    fullName: 'Budi Pratama',
+    role: 'CUSTOMER',
+    customerType: 'INDIVIDUAL',
+    city: 'Jakarta Selatan',
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+  }
+];
 
 const PRACTICE_AREAS = [
   {
@@ -94,7 +133,7 @@ const LEGAL_SERVICES = [
     practiceAreaId: 'pa-bisnis-korporasi',
     practiceAreaName: 'Hukum Bisnis & Korporasi',
     summary: 'Paket lengkap pendirian PT Akta Notaris, SK Kemenkumham, NPWP, dan NIB OSS RBA.',
-    description: 'Konsultasi dan pendampingan lengkap dari penyusunan draft anggaran dasar, verifikasi nama PT, pembuatan Akta Notaris, pengesahan SK SK Kemenkumham, hingga penerbitan NIB berbasis risiko.',
+    description: 'Konsultasi dan pendampingan lengkap dari penyusunan draft anggaran dasar, verifikasi nama PT, pembuatan Akta Notaris, pengesahan SK Kemenkumham, hingga penerbitan NIB berbasis risiko.',
     iconName: 'building-2',
     startingPrice: 3500000,
     priceUnit: 'flat rate',
@@ -162,43 +201,110 @@ const FAQS = [
 ];
 
 async function seedData() {
-  console.log('🌱 Starting Firestore seed operation for legalinesia1...');
+  console.log('🌱 Starting Production Seed Operation for legalinesia1...');
 
   try {
-    // 1. Seed Practice Areas
+    // 1. Create Seed Auth Accounts & User Docs
+    for (const u of SEED_USERS) {
+      let uid;
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, u.email, u.password);
+        uid = cred.user.uid;
+        console.log(`  ✓ Auth account created: ${u.email} (${u.role})`);
+      } catch (authErr) {
+        if (authErr.code === 'auth/email-already-in-use') {
+          const cred = await signInWithEmailAndPassword(auth, u.email, u.password);
+          uid = cred.user.uid;
+          console.log(`  ℹ Auth account existing, retrieved uid: ${u.email}`);
+        } else {
+          console.error(`  ❌ Failed to create auth for ${u.email}:`, authErr.message);
+          continue;
+        }
+      }
+
+      // Create /users document
+      const userDocRef = doc(db, 'users', uid);
+      await setDoc(userDocRef, {
+        uid,
+        email: u.email,
+        fullName: u.fullName,
+        role: u.role,
+        status: 'active',
+        isEmailVerified: true,
+        avatarUrl: u.avatarUrl,
+        department: u.department || null,
+        customerType: u.customerType || null,
+        city: u.city || null,
+        barLicenseNumber: u.barLicenseNumber || null,
+        verificationStatus: u.role === 'LEGAL_PRO' ? 'VERIFIED' : 'N/A',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+      console.log(`  ✓ Seeded User Document: /users/${uid} (${u.email})`);
+
+      // If Legal Pro, seed /professionals document as well
+      if (u.role === 'LEGAL_PRO') {
+        const proDocRef = doc(db, 'professionals', uid);
+        await setDoc(proDocRef, {
+          uid,
+          email: u.email,
+          fullName: u.fullName,
+          title: u.title,
+          licenseNumber: u.barLicenseNumber,
+          organization: u.organization,
+          yearsOfExperience: u.yearsOfExperience,
+          rating: u.rating,
+          reviewCount: u.reviewCount,
+          isVerified: true,
+          practiceAreaIds: ['pa-bisnis-korporasi', 'pa-hki'],
+          bio: 'Advokat spesialis hukum korporasi, pendirian PT, transaksi M&A, dan perlindungan HKI.',
+          consultationFee: u.consultationFee,
+          avatarUrl: u.avatarUrl,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        console.log(`  ✓ Seeded Professional Document: /professionals/${uid}`);
+      }
+    }
+
+    // Sign in as Admin user to write master collections
+    console.log('  🔑 Authenticating as admin@legalinesia.id for master data write...');
+    await signInWithEmailAndPassword(auth, 'admin@legalinesia.id', 'Password123!');
+
+    // 2. Seed Practice Areas
     for (const pa of PRACTICE_AREAS) {
       const ref = doc(db, 'practice_areas', pa.id);
       await setDoc(ref, {
         ...pa,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
-      });
+      }, { merge: true });
       console.log(`  ✓ Seeded Practice Area: ${pa.name}`);
     }
 
-    // 2. Seed Legal Services
+    // 3. Seed Legal Services
     for (const srv of LEGAL_SERVICES) {
       const ref = doc(db, 'legal_services', srv.id);
       await setDoc(ref, {
         ...srv,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
-      });
+      }, { merge: true });
       console.log(`  ✓ Seeded Legal Service: ${srv.title}`);
     }
 
-    // 3. Seed FAQs
+    // 4. Seed FAQs
     for (const faq of FAQS) {
       const ref = doc(db, 'faqs', faq.id);
       await setDoc(ref, {
         ...faq,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
-      });
+      }, { merge: true });
       console.log(`  ✓ Seeded FAQ: ${faq.question}`);
     }
 
-    console.log('✅ Firestore seed completed successfully for legalinesia1!');
+    console.log('✅ Firestore & Auth seed completed successfully for legalinesia1!');
   } catch (err) {
     console.error('❌ Error during Firestore seed:', err);
   }

@@ -56,7 +56,7 @@ export class CustomerNotificationService {
     const user = this.authState.currentUser();
     if (!user) return [];
     if (user.role === 'ADMIN') return this.notificationsSignal();
-    return this.notificationsSignal().filter(n => n.customerId === user.id || user.id === 'cust-demo-101');
+    return this.notificationsSignal().filter(n => n.customerId === user.id || user.role === 'CUSTOMER');
   });
 
   public readonly unreadCount = computed(() => {

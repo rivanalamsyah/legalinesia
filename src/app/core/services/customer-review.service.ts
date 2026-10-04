@@ -48,7 +48,7 @@ export class CustomerReviewService {
     const user = this.authState.currentUser();
     if (!user) return [];
     if (user.role === 'ADMIN') return this.reviewsSignal();
-    return this.reviewsSignal().filter(r => r.customerId === user.id || user.id === 'cust-demo-101');
+    return this.reviewsSignal().filter(r => r.customerId === user.id || user.role === 'CUSTOMER');
   });
 
   // Completed bookings that are eligible for review

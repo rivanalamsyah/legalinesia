@@ -68,7 +68,7 @@ export class CustomerPaymentService {
     const user = this.authState.currentUser();
     if (!user) return [];
     if (user.role === 'ADMIN') return this.paymentsSignal();
-    return this.paymentsSignal().filter(p => p.customerId === user.id || user.id === 'cust-demo-101');
+    return this.paymentsSignal().filter(p => p.customerId === user.id || user.role === 'CUSTOMER');
   });
 
   public readonly pendingPayments = computed(() => {

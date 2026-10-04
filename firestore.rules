@@ -152,5 +152,11 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // 12. PRACTICE AREAS (/practice_areas/{areaId})
+    match /practice_areas/{areaId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
   }
 }

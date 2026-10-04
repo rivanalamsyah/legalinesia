@@ -126,7 +126,7 @@ export class CustomerBookingService {
     if (!user) return [];
     // If Admin, can view all. If Customer, only matching customerId
     if (user.role === 'ADMIN') return this.bookingsSignal();
-    return this.bookingsSignal().filter(b => b.customerId === user.id || user.id === 'cust-demo-101');
+    return this.bookingsSignal().filter(b => b.customerId === user.id || user.role === 'CUSTOMER');
   });
 
   public readonly upcomingBookings = computed(() => {

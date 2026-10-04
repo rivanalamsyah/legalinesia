@@ -28,31 +28,6 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
           </a>
         </div>
 
-        <!-- Quick Demo Portal Login Bar (RBAC Testing) -->
-        <div class="glass-panel-dark rounded-2xl p-4 text-center border border-white/10 space-y-2">
-          <div class="text-xs font-semibold text-brand-300 uppercase tracking-wider">Akses Uji Coba Portal (RBAC Demo)</div>
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button
-              type="button"
-              (click)="loginDemo(UserRole.CUSTOMER)"
-              class="px-2.5 py-2 rounded-xl bg-white/10 hover:bg-brand-500/30 border border-white/10 text-xs font-semibold text-white transition-all">
-              Portal Klien
-            </button>
-            <button
-              type="button"
-              (click)="loginDemo(UserRole.LEGAL_PRO)"
-              class="px-2.5 py-2 rounded-xl bg-white/10 hover:bg-amber-500/30 border border-white/10 text-xs font-semibold text-white transition-all">
-              Portal Advokat
-            </button>
-            <button
-              type="button"
-              (click)="loginDemo(UserRole.ADMIN)"
-              class="px-2.5 py-2 rounded-xl bg-white/10 hover:bg-purple-500/30 border border-white/10 text-xs font-semibold text-white transition-all">
-              Admin CMS
-            </button>
-          </div>
-        </div>
-
         <!-- Error Feedback Banner -->
         @if (errorMessage) {
           <div class="bg-red-500/20 border border-red-400/40 rounded-2xl p-4 text-xs text-red-200 flex items-start gap-2">
@@ -213,21 +188,11 @@ export class AuthPageComponent {
     termsAccepted: [false, Validators.requiredTrue]
   });
 
-  public loginDemo(role: UserRole): void {
-    const user = this.authState.loginAsDemo(role);
-    const targetRoute = this.authState.getPortalRouteForRole(user.role);
-    this.router.navigate([targetRoute]);
-  }
-
   public async onLoginWithGoogle(): Promise<void> {
     this.isLoading = true;
     this.errorMessage = null;
 
-    const selectedRole = this.activeTab === 'register'
-      ? (this.registerForm.get('role')?.value as 'CUSTOMER' | 'LEGAL_PRO') || 'CUSTOMER'
-      : 'CUSTOMER';
-
-    const result = await this.firebaseAuth.loginWithGoogle(selectedRole);
+    const result = await this.firebaseAuth.loginWithGoogle();
     this.isLoading = false;
 
     if (!result.success) {

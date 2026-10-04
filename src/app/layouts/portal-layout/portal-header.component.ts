@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthStateService } from '../../core/services/auth-state.service';
+import { FirebaseAuthService } from '../../core/firebase/firebase-auth.service';
 import { UserRole } from '../../core/models/role.enum';
 import { IconComponent } from '../../shared/components/ui/icon/icon.component';
 import { DropdownMenuComponent, DropdownMenuItem } from '../../shared/components/ui/dropdown/dropdown-menu.component';
@@ -34,27 +35,12 @@ import { DropdownMenuComponent, DropdownMenuItem } from '../../shared/components
         </div>
       </div>
 
-      <!-- Right: Role Switcher Dropdown, Notifications, User Menu -->
+      <!-- Right: Notifications & Real User Profile Menu -->
       <div class="flex items-center gap-3">
-        
-        <!-- Dev Role Switcher Dropdown -->
-        <app-dropdown-menu
-          headerTitle="Pilih Portal Demo (RBAC)"
-          [items]="roleMenuItems"
-          (selectItem)="onSelectRoleItem($event)">
-          <button
-            trigger
-            type="button"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-white/80 transition-colors">
-            <app-icon name="user-check" size="xs" className="text-brand-400"></app-icon>
-            <span class="hidden sm:inline">Role Demo</span>
-            <app-icon name="chevron-down" size="xs" className="text-white/40"></app-icon>
-          </button>
-        </app-dropdown-menu>
 
         <!-- Notification Bell Dropdown -->
         <app-dropdown-menu
-          headerTitle="Notifikasi Sistem (3 Baru)"
+          headerTitle="Notifikasi Sistem"
           [items]="notificationItems"
           (selectItem)="onSelectNotification($event)">
           <button
@@ -63,7 +49,6 @@ import { DropdownMenuComponent, DropdownMenuItem } from '../../shared/components
             aria-label="Notifikasi Sistem"
             class="relative p-2 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-colors">
             <app-icon name="bell" size="sm"></app-icon>
-            <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
             <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand-400"></span>
           </button>
         </app-dropdown-menu>
@@ -109,6 +94,7 @@ export class PortalHeaderComponent {
   @Output() toggleSidebar = new EventEmitter<void>();
 
   public readonly authState = inject(AuthStateService);
+  private readonly firebaseAuth = inject(FirebaseAuthService);
   private readonly router = inject(Router);
   public readonly UserRole = UserRole;
 
@@ -129,43 +115,29 @@ export class PortalHeaderComponent {
     }
   }
 
-  public roleMenuItems: DropdownMenuItem[] = [
-    { id: UserRole.CUSTOMER, label: 'Portal Klien (Customer)', iconName: 'user' },
-    { id: UserRole.LEGAL_PRO, label: 'Portal Advokat (Legal Pro)', iconName: 'shield-check' },
-    { id: UserRole.ADMIN, label: 'Admin CMS (Administrator)', iconName: 'lock' }
-  ];
-
   public notificationItems: DropdownMenuItem[] = [
-    { id: 'notif-1', label: 'Jadwal Konsultasi Senin 14:00 WIB', iconName: 'calendar', badge: 'Baru' },
-    { id: 'notif-2', label: 'Dokumen Akta PT telah dikonfirmasi', iconName: 'file-check', badge: 'Penting' },
-    { id: 'notif-3', label: 'Pemberitahuan verifikasi akun PERADI', iconName: 'badge-check' }
+    { id: 'notif-1', label: 'Selamat datang di Legalinesia', iconName: 'bell' }
   ];
 
   public userMenuItems: DropdownMenuItem[] = [
     { id: 'profile', label: 'Pengaturan Profil', iconName: 'user' },
-    { id: 'help', label: 'Pusat Bantuan & FAQ', iconName: 'help-circle' },
+    { id: 'about', label: 'Tentang Kami & FAQ', iconName: 'help-circle' },
     { id: 'logout', label: 'Keluar Akun', iconName: 'log-out', danger: true, divider: true }
   ];
 
-  public onSelectRoleItem(item: DropdownMenuItem): void {
-    const targetRole = item.id as UserRole;
-    const user = this.authState.loginAsDemo(targetRole);
-    const targetRoute = this.authState.getPortalRouteForRole(user.role);
-    this.router.navigate([targetRoute]);
-  }
-
   public onSelectNotification(item: DropdownMenuItem): void {
-    // Handle notification click
+    // Handle notification action
   }
 
-  public onSelectUserItem(item: DropdownMenuItem): void {
+  public async onSelectUserItem(item: DropdownMenuItem): Promise<void> {
     if (item.id === 'logout') {
-      this.authState.logout();
-      this.router.navigate(['/auth/login']);
+      await this.firebaseAuth.logout();
     } else if (item.id === 'profile') {
       const role = this.authState.currentRole();
       const route = this.authState.getPortalRouteForRole(role) + '/profile';
       this.router.navigate([route]);
+    } else if (item.id === 'about') {
+      this.router.navigate(['/about']);
     }
   }
 }

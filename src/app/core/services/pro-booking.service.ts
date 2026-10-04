@@ -302,8 +302,7 @@ export class ProBookingService {
     const user = this.authState.currentUser();
     if (!user) return [];
     if (user.role === 'ADMIN') return this.bookingsSignal();
-    // Scope check: user.id === professionalId or fallback demo ID 'pro-demo-202'
-    return this.bookingsSignal().filter(b => b.professionalId === user.id || user.id === 'pro-demo-202' || user.id === 'lawyer-1');
+    return this.bookingsSignal().filter(b => b.professionalId === user.id || user.role === 'LEGAL_PRO');
   });
 
   public readonly todayDateStr = new Date().toISOString().split('T')[0];
