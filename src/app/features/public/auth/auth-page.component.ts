@@ -136,7 +136,7 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
                 <div class="flex items-start gap-2">
                   <input id="reg-terms" type="checkbox" formControlName="termsAccepted" class="mt-0.5 rounded" />
                   <label for="reg-terms" class="text-xs text-white/60 leading-relaxed">
-                    Saya setuju dengan <a routerLink="/contact" class="text-brand-400 hover:underline">Syarat & Ketentuan</a> dan <a routerLink="/contact" class="text-brand-400 hover:underline">Kebijakan Privasi</a> LegalConnect.
+                    Saya setuju dengan <a routerLink="/contact" class="text-brand-400 hover:underline">Syarat & Ketentuan</a> dan <a routerLink="/contact" class="text-brand-400 hover:underline">Kebijakan Privasi</a> Legalinesia.
                   </label>
                 </div>
                 <app-button type="submit" variant="gold" size="lg" fullWidth [loading]="isLoading">

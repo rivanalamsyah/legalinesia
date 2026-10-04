@@ -9,9 +9,9 @@ export class CustomTitleStrategy extends TitleStrategy {
   override updateTitle(snapshot: RouterStateSnapshot): void {
     const title = this.buildTitle(snapshot);
     if (title) {
-      this.title.setTitle(`${title} | LegalConnect`);
+      this.title.setTitle(`${title} | Legalinesia`);
     } else {
-      this.title.setTitle('LegalConnect - Platform Konsultasi Hukum & Direktori Advokat Terpercaya');
+      this.title.setTitle('Legalinesia - Platform Konsultasi Hukum & Direktori Advokat Terpercaya');
     }
   }
 }

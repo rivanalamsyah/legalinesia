@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "legalconnect": {
+    "legalinesia": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -22,7 +22,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/legalconnect",
+            "outputPath": "dist/legalinesia",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -70,10 +70,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "legalconnect:build:production"
+              "buildTarget": "legalinesia:build:production"
             },
             "development": {
-              "buildTarget": "legalconnect:build:development"
+              "buildTarget": "legalinesia:build:development"
             }
           },
           "defaultConfiguration": "development"

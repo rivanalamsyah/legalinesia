@@ -207,11 +207,11 @@ import { LegalService } from '../../../core/models/legal-service.model';
       </app-container>
     </section>
 
-    <!-- 7. WHY LEGALCONNECT (TRUST PILLARS) -->
+    <!-- 7. WHY LEGALINESIA (TRUST PILLARS) -->
     <section class="section-padding bg-white">
       <app-container size="lg">
         <app-section-header
-          title="Mengapa Memilih LegalConnect?"
+          title="Mengapa Memilih Legalinesia?"
           subtitle="Jaminan integritas, keamanan data, dan kepastian biaya di setiap proses hukum Anda"
           badge="Keunggulan"
           [centered]="true">
@@ -234,7 +234,7 @@ import { LegalService } from '../../../core/models/legal-service.model';
       <app-container size="lg">
         <app-section-header
           title="Perbandingan Konsultasi"
-          subtitle="Lihat bagaimana LegalConnect mempermudah akses hukum dibanding metode tradisional"
+          subtitle="Lihat bagaimana Legalinesia mempermudah akses hukum dibanding metode tradisional"
           badge="Inovasi Digital"
           [centered]="true">
         </app-section-header>
@@ -255,7 +255,7 @@ import { LegalService } from '../../../core/models/legal-service.model';
           <div class="surface-card p-8 border-brand-300 bg-brand-50/30">
             <h3 class="font-heading font-bold text-lg text-brand-900 mb-4 flex items-center gap-2">
               <app-icon name="check-circle-2" size="md" class="text-emerald-600"></app-icon>
-              LegalConnect Digital
+              Legalinesia Digital
             </h3>
             <ul class="space-y-3 text-xs md:text-sm text-slate-700">
               <li class="flex items-start gap-2"><span>✅</span> 100% Advokat Berlisensi PERADI Terverifikasi</li>
@@ -272,7 +272,7 @@ import { LegalService } from '../../../core/models/legal-service.model';
       <app-container size="lg">
         <app-section-header
           title="Ulasan Klien Terverifikasi"
-          subtitle="Pengalaman riil dari klien yang telah berkonsultasi via LegalConnect"
+          subtitle="Pengalaman riil dari klien yang telah berkonsultasi via Legalinesia"
           badge="Testimoni"
           [centered]="true">
         </app-section-header>
@@ -354,8 +354,8 @@ export class HomePageComponent implements OnInit {
   public readonly faqItems: AccordionItem[] = [
     {
       id: 'faq-1',
-      title: 'Apakah advokat di LegalConnect resmi dan berlisensi?',
-      content: 'Ya, seluruh advokat yang terdaftar di LegalConnect telah melalui proses verifikasi ketat identitas KTP, keanggotaan organisasi advokat PERADI, dan Berita Acara Sumpah (BAS) Pengadilan Tinggi.',
+      title: 'Apakah advokat di Legalinesia resmi dan berlisensi?',
+      content: 'Ya, seluruh advokat yang terdaftar di Legalinesia telah melalui proses verifikasi ketat identitas KTP, keanggotaan organisasi advokat PERADI, dan Berita Acara Sumpah (BAS) Pengadilan Tinggi.',
       isOpen: true
     },
     {

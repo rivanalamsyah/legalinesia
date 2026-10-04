@@ -28,7 +28,7 @@ interface Step {
 
         <div class="max-w-3xl mt-4">
           <h1 class="font-heading text-4xl md:text-5xl font-extrabold mb-5">
-            Cara Kerja <span class="text-gradient-gold">LegalConnect</span>
+            Cara Kerja <span class="text-gradient-gold">Legalinesia</span>
           </h1>
           <p class="text-slate-300 text-base md:text-lg leading-relaxed">
             Proses konsultasi hukum yang transparan, mudah, dan terproteksi — dari pencarian advokat hingga penerimaan rekomendasi hukum tertulis.
@@ -98,7 +98,7 @@ export class HowItWorksPageComponent implements OnInit {
   ngOnInit(): void {
     this.seo.updateSeo({
       title: 'Cara Kerja Platform Konsultasi Hukum',
-      description: 'Pelajari cara LegalConnect menghubungkan Anda dengan advokat berlisensi dalam 5 langkah mudah — dari pencarian hingga penyelesaian kasus.',
+      description: 'Pelajari cara Legalinesia menghubungkan Anda dengan advokat berlisensi dalam 5 langkah mudah — dari pencarian hingga penyelesaian kasus.',
       keywords: ['cara konsultasi hukum online', 'booking advokat', 'konsultasi online indonesia']
     });
   }

@@ -45,7 +45,7 @@ export const PUBLIC_NAVIGATION_CONFIG: NavigationConfig = {
       { label: 'Audit & Sengketa Pertanahan', route: '/services' },
     ],
     company: [
-      { label: 'Tentang LegalConnect', route: '/about' },
+      { label: 'Tentang Legalinesia', route: '/about' },
       { label: 'Tim Advokat Berlisensi', route: '/professionals' },
       { label: 'Cara Kerja Layanan', route: '/how-it-works' },
       { label: 'Hubungi Kami', route: '/contact' },
@@ -68,7 +68,7 @@ export const PUBLIC_NAVIGATION_CONFIG: NavigationConfig = {
   },
   contactInfo: {
     phone: '+62 21 5088 9900',
-    email: 'support@legalconnect.id',
+    email: 'support@legalinesia.id',
     address: 'Sequis Tower Lt. 18, Jl. Jend. Sudirman Kav. 71, Jakarta Selatan 12190',
     whatsappUrl: 'https://wa.me/628119900881'
   }

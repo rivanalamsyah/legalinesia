@@ -85,13 +85,13 @@ export class FaqPageComponent implements OnInit {
   ];
 
   private readonly allFaqs = [
-    { id: '1', category: 'GENERAL', title: 'Apa itu LegalConnect dan bagaimana cara kerjanya?', content: 'LegalConnect adalah platform digital yang menghubungkan masyarakat Indonesia dengan advokat berlisensi PERADI secara transparan, mudah, dan aman.' },
-    { id: '2', category: 'GENERAL', title: 'Apakah LegalConnect terdaftar dan legal di Indonesia?', content: 'Ya. LegalConnect beroperasi sesuai regulasi hukum Indonesia dan seluruh advokat di platform kami memiliki lisensi resmi aktif PERADI.' },
+    { id: '1', category: 'GENERAL', title: 'Apa itu Legalinesia dan bagaimana cara kerjanya?', content: 'Legalinesia adalah platform digital yang menghubungkan masyarakat Indonesia dengan advokat berlisensi PERADI secara transparan, mudah, dan aman.' },
+    { id: '2', category: 'GENERAL', title: 'Apakah Legalinesia terdaftar dan legal di Indonesia?', content: 'Ya. Legalinesia beroperasi sesuai regulasi hukum Indonesia dan seluruh advokat di platform kami memiliki lisensi resmi aktif PERADI.' },
     { id: '3', category: 'BOOKING', title: 'Bagaimana cara memesan konsultasi dengan advokat?', content: 'Cukup cari advokat yang sesuai, pilih tanggal dan jam yang tersedia, dan lakukan pembayaran. Anda akan menerima link video call / konfirmasi sesi.' },
     { id: '4', category: 'BOOKING', title: 'Apa yang terjadi jika advokat membatalkan janji temu?', content: 'Jika advokat membatalkan sesi, Anda akan menerima pengembalian dana penuh 100% atau opsi reskedul jadwal gratis.' },
     { id: '5', category: 'PAYMENT', title: 'Metode pembayaran apa saja yang diterima?', content: 'Kami menerima Virtual Account (BCA, Mandiri, BNI, BRI), QRIS, Kartu Kredit/Debit, dan E-Wallet resmi via sistem escrow terproteksi.' },
     { id: '6', category: 'PRIVACY', title: 'Apakah percakapan dengan advokat saya bersifat rahasia?', content: 'Tentu saja. Seluruh komunikasi dilindungi oleh asas Attorney-Client Privilege dan dienkripsi SSL/TLS 256-bit.' },
-    { id: '7', category: 'VERIFICATION', title: 'Bagaimana cara LegalConnect memverifikasi advokat?', content: 'Setiap calon advokat melewati verifikasi 3 tahap: validasi nomor KTPA PERADI, cek Berita Acara Sumpah (BAS) Pengadilan Tinggi, dan background check integritas.' }
+    { id: '7', category: 'VERIFICATION', title: 'Bagaimana cara Legalinesia memverifikasi advokat?', content: 'Setiap calon advokat melewati verifikasi 3 tahap: validasi nomor KTPA PERADI, cek Berita Acara Sumpah (BAS) Pengadilan Tinggi, dan background check integritas.' }
   ];
 
   public readonly accordionItems = computed<AccordionItem[]>(() => {
@@ -117,8 +117,8 @@ export class FaqPageComponent implements OnInit {
   ngOnInit(): void {
     this.seo.updateSeo({
       title: 'FAQ - Pertanyaan yang Sering Diajukan',
-      description: 'Temukan jawaban atas pertanyaan umum tentang LegalConnect: cara pemesanan, pembayaran, kerahasiaan konsultasi, dan verifikasi advokat.',
-      keywords: ['faq legalconnect', 'pertanyaan hukum', 'cara konsultasi advokat']
+      description: 'Temukan jawaban atas pertanyaan umum tentang Legalinesia: cara pemesanan, pembayaran, kerahasiaan konsultasi, dan verifikasi advokat.',
+      keywords: ['faq legalinesia', 'pertanyaan hukum', 'cara konsultasi advokat']
     });
   }
 }

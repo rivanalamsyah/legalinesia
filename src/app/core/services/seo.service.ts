@@ -18,9 +18,9 @@ export class SeoService {
   private readonly titleService = inject(Title);
   private readonly metaService = inject(Meta);
 
-  private readonly siteName = 'LegalConnect';
-  private readonly siteUrl = 'https://legalconnect.id';
-  private readonly defaultTitle = 'LegalConnect - Platform Konsultasi Hukum & Direktori Advokat Terpercaya';
+  private readonly siteName = 'Legalinesia';
+  private readonly siteUrl = 'https://legalinesia.id';
+  private readonly defaultTitle = 'Legalinesia - Platform Konsultasi Hukum & Direktori Advokat Terpercaya';
   private readonly defaultDescription = 'Hubungkan kebutuhan hukum Anda dengan advokat berlisensi PERADI dan konsultan hukum berpengalaman di Indonesia. Konsultasi instan, transparan, dan aman.';
   private readonly defaultKeywords = ['konsultasi hukum', 'advokat indonesia', 'pengacara jakarta', 'pendirian PT', 'hukum keluarga', 'sengketa bisnis', 'kontrak bisnis'];
 
@@ -33,7 +33,7 @@ export class SeoService {
 
     const description = meta.description || this.defaultDescription;
     const keywords = meta.keywords ? meta.keywords.join(', ') : this.defaultKeywords.join(', ');
-    const ogImage = meta.ogImage || `${this.siteUrl}/assets/images/og-legalconnect.jpg`;
+    const ogImage = meta.ogImage || `${this.siteUrl}/assets/images/og-legalinesia.jpg`;
     const ogType = meta.ogType || 'website';
     const canonical = meta.canonicalUrl || (typeof window !== 'undefined' ? window.location.href : this.siteUrl);
     const robots = meta.robots || 'index, follow';
@@ -92,7 +92,7 @@ export class SeoService {
     const orgSchema = {
       '@context': 'https://schema.org',
       '@type': 'LegalService',
-      'name': 'LegalConnect Indonesia',
+      'name': 'Legalinesia Indonesia',
       'url': this.siteUrl,
       'logo': `${this.siteUrl}/assets/images/logo.png`,
       'description': this.defaultDescription,

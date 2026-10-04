@@ -1,4 +1,4 @@
-# Legalinesia (LegalConnect Platform)
+# Legalinesia (Legalinesia Platform)
 
 > **Platform Konsultasi Hukum & Direktori Advokat Terpercaya di Indonesia**  
 > Solusi digital legal-tech modern yang menghubungkan individu dan pelaku usaha dengan advokat profesional terverifikasi, layanan hukum transparan, serta edukasi hukum secara seamless, aman, dan mudah diakses.
@@ -25,7 +25,7 @@
 
 ## 📘 Tentang Legalinesia
 
-**Legalinesia** (menggunakan sebutan produk **LegalConnect**) adalah platform *legal-tech* enterprise-grade modern yang dirancang untuk mengatasi hambatan akses terhadap keadilan dan layanan hukum di Indonesia. Melalui sistem navigasi intuitif, transparansi biaya, direktori advokat terverifikasi, dan integrasi penjadwalan konsultasi, Legalinesia memberikan pengalaman hukum digital yang tepercaya, kredibel, dan berstandar tinggi.
+**Legalinesia** (menggunakan sebutan produk **Legalinesia**) adalah platform *legal-tech* enterprise-grade modern yang dirancang untuk mengatasi hambatan akses terhadap keadilan dan layanan hukum di Indonesia. Melalui sistem navigasi intuitif, transparansi biaya, direktori advokat terverifikasi, dan integrasi penjadwalan konsultasi, Legalinesia memberikan pengalaman hukum digital yang tepercaya, kredibel, dan berstandar tinggi.
 
 Website ini dibangun menggunakan **Angular 19** standalone components, **Tailwind CSS**, dan arsitektur modular yang responsif (*mobile-first*), dioptimalkan secara teknis untuk *Search Engine Optimization* (SEO), performa web tinggi, serta memenuhi standar aksesibilitas web (WCAG 2.1 AA).
 
@@ -307,7 +307,7 @@ Kami menyambut kontribusi dari para pengembang! Untuk menjaga kualitas basis kod
 
 ## 📄 Lisensi
 
-Hak Cipta © 2026 **Legalinesia / LegalConnect Team**. Hak Cipta Dilindungi Undang-Undang.
+Hak Cipta © 2026 **Legalinesia / Legalinesia Team**. Hak Cipta Dilindungi Undang-Undang.
 
 ---
 

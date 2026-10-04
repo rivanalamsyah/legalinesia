@@ -3,4 +3,4 @@ import { AppComponent } from './app/app.component';
 import { appConfig } from './app/core/config/app.config';
 
 bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error('[LegalConnect] Bootstrap Error:', err));
+  .catch((err) => console.error('[Legalinesia] Bootstrap Error:', err));

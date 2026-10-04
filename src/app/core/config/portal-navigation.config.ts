@@ -17,7 +17,7 @@ export interface PortalNavConfig {
 }
 
 export const CUSTOMER_PORTAL_NAV: PortalNavConfig = {
-  portalTitle: 'LegalConnect Klien',
+  portalTitle: 'Legalinesia Klien',
   portalRoleName: 'Klien Terverifikasi',
   items: [
     { id: 'dashboard', label: 'Dashboard', route: '/portal/customer/dashboard', iconName: 'layout-dashboard' },
@@ -32,7 +32,7 @@ export const CUSTOMER_PORTAL_NAV: PortalNavConfig = {
 };
 
 export const PRO_PORTAL_NAV: PortalNavConfig = {
-  portalTitle: 'LegalConnect Advokat',
+  portalTitle: 'Legalinesia Advokat',
   portalRoleName: 'Legal Professional',
   items: [
     { id: 'dashboard', label: 'Overview', route: '/portal/pro/dashboard', iconName: 'layout-dashboard' },
@@ -48,7 +48,7 @@ export const PRO_PORTAL_NAV: PortalNavConfig = {
 };
 
 export const ADMIN_PORTAL_NAV: PortalNavConfig = {
-  portalTitle: 'LegalConnect Admin CMS',
+  portalTitle: 'Legalinesia Admin CMS',
   portalRoleName: 'Platform Administrator',
   items: [
     { id: 'dashboard', label: 'Ringkasan Platform', route: '/portal/admin/dashboard', iconName: 'bar-chart-3' },

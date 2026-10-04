@@ -26,7 +26,7 @@ export const MOCK_REVIEWS: CustomerReview[] = [
     customerName: 'Budi Santoso',
     professionalId: 'lawyer-2',
     professionalName: 'Dr. Anisa Rahmawati, S.H., M.Kn.',
-    professionalAvatar: '/images/avatars/avatar-female-1.svg',
+    professionalAvatar: '/images/avatars/avatar-female-1.png',
     serviceTitle: 'Review & Drafting Perjanjian Kerjasama',
     rating: 5,
     comment: 'Penjelasan Bu Dr. Anisa sangat empatik dan detail mengenai klausul hak asuh anak dan pemisahan harta.',

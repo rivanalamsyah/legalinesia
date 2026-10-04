@@ -41,7 +41,7 @@ const SEED_USERS = [
     fullName: 'Administrator Legalinesia',
     role: 'ADMIN',
     department: 'Platform Operations & Governance',
-    avatarUrl: '/images/avatars/avatar-admin.svg'
+    avatarUrl: '/images/avatars/avatar-admin.png'
   },
   {
     email: 'advokat@legalinesia.id',
@@ -55,7 +55,7 @@ const SEED_USERS = [
     rating: 4.9,
     reviewCount: 28,
     consultationFee: 350000,
-    avatarUrl: '/images/avatars/avatar-male-1.svg'
+    avatarUrl: '/images/avatars/avatar-male-1.png'
   },
   {
     email: 'klien@legalinesia.id',
@@ -64,7 +64,7 @@ const SEED_USERS = [
     role: 'CUSTOMER',
     customerType: 'INDIVIDUAL',
     city: 'Jakarta Selatan',
-    avatarUrl: '/images/avatars/avatar-customer-default.svg'
+    avatarUrl: '/images/avatars/avatar-customer-default.png'
   }
 ];
 

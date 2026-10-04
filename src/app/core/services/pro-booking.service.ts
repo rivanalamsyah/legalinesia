@@ -38,7 +38,7 @@ export const MOCK_PRO_BOOKINGS: BookingItem[] = [
     professionalId: 'pro-demo-202',
     professionalName: 'Bambang Sutrisno, S.H., M.H.',
     professionalTitle: 'Advokat Senior & Konsultan Hukum Bisnis',
-    professionalAvatar: '/images/avatars/avatar-male-1.svg',
+    professionalAvatar: '/images/avatars/avatar-male-1.png',
     barLicenseNumber: 'PERADI/2012/84729',
 
     serviceId: 'srv-1',

@@ -4,7 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/legalconnect/browser",
+    "public": "dist/legalinesia/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

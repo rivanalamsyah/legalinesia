@@ -107,7 +107,7 @@ import { ToastComponent } from '../../../shared/components/ui/toast/toast.compon
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-navy-800 pb-3">
                 <div class="flex items-center gap-3">
                   <img
-                    [src]="review.professionalAvatar || '/images/avatars/avatar-female-1.svg'"
+                    [src]="review.professionalAvatar || '/images/avatars/avatar-female-1.png'"
                     [alt]="review.professionalName"
                     class="w-10 h-10 rounded-full object-cover border border-white/10" />
                   <div>

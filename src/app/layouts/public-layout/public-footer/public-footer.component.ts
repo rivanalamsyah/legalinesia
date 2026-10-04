@@ -17,7 +17,7 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
           
           <!-- Brand Column -->
           <div class="lg:col-span-2">
-            <a routerLink="/" class="flex items-center gap-2.5 mb-5" aria-label="LegalConnect - Beranda">
+            <a routerLink="/" class="flex items-center gap-2.5 mb-5" aria-label="Legalinesia - Beranda">
               <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center">
                 <app-icon name="scale" size="sm" className="text-white"></app-icon>
               </div>
@@ -117,7 +117,7 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
       <div class="border-t border-slate-700/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p class="text-xs text-slate-500">
-            &copy; {{ currentYear }} LegalConnect Indonesia. Seluruh hak cipta dilindungi undang-undang.
+            &copy; {{ currentYear }} Legalinesia Indonesia. Seluruh hak cipta dilindungi undang-undang.
           </p>
           <p class="text-xs text-slate-600">
             Layanan ini tidak menggantikan nasihat hukum profesional terdaftar.

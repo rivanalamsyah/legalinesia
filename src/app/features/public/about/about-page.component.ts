@@ -27,7 +27,7 @@ import { AccordionComponent, AccordionItem } from '../../../shared/components/ui
             <span class="text-gradient-gold">yang Dapat Diakses Semua</span>
           </h1>
           <p class="text-slate-300 text-lg leading-relaxed">
-            LegalConnect didirikan atas keyakinan bahwa setiap warga negara Indonesia berhak mendapatkan akses ke layanan hukum berkualitas — tanpa terhalang oleh birokrasi, informasi yang tidak simetris, atau biaya yang tidak terjangkau.
+            Legalinesia didirikan atas keyakinan bahwa setiap warga negara Indonesia berhak mendapatkan akses ke layanan hukum berkualitas — tanpa terhalang oleh birokrasi, informasi yang tidak simetris, atau biaya yang tidak terjangkau.
           </p>
         </div>
       </app-container>
@@ -163,13 +163,13 @@ export class AboutPageComponent implements OnInit {
   ];
 
   private readonly allFaqs = [
-    { id: '1', category: 'GENERAL', title: 'Apa itu LegalConnect dan bagaimana cara kerjanya?', content: 'LegalConnect adalah platform digital yang menghubungkan masyarakat Indonesia dengan advokat berlisensi PERADI secara transparan, mudah, dan aman.' },
-    { id: '2', category: 'GENERAL', title: 'Apakah LegalConnect terdaftar dan legal di Indonesia?', content: 'Ya. LegalConnect beroperasi sesuai regulasi hukum Indonesia dan seluruh advokat di platform kami memiliki lisensi resmi aktif PERADI.' },
+    { id: '1', category: 'GENERAL', title: 'Apa itu Legalinesia dan bagaimana cara kerjanya?', content: 'Legalinesia adalah platform digital yang menghubungkan masyarakat Indonesia dengan advokat berlisensi PERADI secara transparan, mudah, dan aman.' },
+    { id: '2', category: 'GENERAL', title: 'Apakah Legalinesia terdaftar dan legal di Indonesia?', content: 'Ya. Legalinesia beroperasi sesuai regulasi hukum Indonesia dan seluruh advokat di platform kami memiliki lisensi resmi aktif PERADI.' },
     { id: '3', category: 'BOOKING', title: 'Bagaimana cara memesan konsultasi dengan advokat?', content: 'Cukup cari advokat yang sesuai, pilih tanggal dan jam yang tersedia, dan lakukan pembayaran. Anda akan menerima link video call / konfirmasi sesi.' },
     { id: '4', category: 'BOOKING', title: 'Apa yang terjadi jika advokat membatalkan janji temu?', content: 'Jika advokat membatalkan sesi, Anda akan menerima pengembalian dana penuh 100% atau opsi reskedul jadwal gratis.' },
     { id: '5', category: 'PAYMENT', title: 'Metode pembayaran apa saja yang diterima?', content: 'Kami menerima Virtual Account (BCA, Mandiri, BNI, BRI) dengan verifikasi otomatis atau manual admin.' },
     { id: '6', category: 'PRIVACY', title: 'Apakah percakapan dengan advokat saya bersifat rahasia?', content: 'Tentu saja. Seluruh komunikasi dilindungi oleh asas Attorney-Client Privilege dan dienkripsi SSL/TLS 256-bit.' },
-    { id: '7', category: 'VERIFICATION', title: 'Bagaimana cara LegalConnect memverifikasi advokat?', content: 'Setiap calon advokat melewati verifikasi 3 tahap: validasi nomor KTPA PERADI, cek Berita Acara Sumpah (BAS) Pengadilan Tinggi, dan background check integritas.' }
+    { id: '7', category: 'VERIFICATION', title: 'Bagaimana cara Legalinesia memverifikasi advokat?', content: 'Setiap calon advokat melewati verifikasi 3 tahap: validasi nomor KTPA PERADI, cek Berita Acara Sumpah (BAS) Pengadilan Tinggi, dan background check integritas.' }
   ];
 
   public readonly accordionItems = computed<AccordionItem[]>(() => {
@@ -194,9 +194,9 @@ export class AboutPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.seo.updateSeo({
-      title: 'Tentang LegalConnect & Pusat Bantuan FAQ',
-      description: 'Pelajari misi, visi, nilai-nilai, dan Pusat Bantuan FAQ LegalConnect sebagai platform legal-tech terpercaya di Indonesia.',
-      keywords: ['tentang legalconnect', 'faq legalconnect', 'platform hukum indonesia', 'legal tech startup']
+      title: 'Tentang Legalinesia & Pusat Bantuan FAQ',
+      description: 'Pelajari misi, visi, nilai-nilai, dan Pusat Bantuan FAQ Legalinesia sebagai platform legal-tech terpercaya di Indonesia.',
+      keywords: ['tentang legalinesia', 'faq legalinesia', 'platform hukum indonesia', 'legal tech startup']
     });
   }
 }

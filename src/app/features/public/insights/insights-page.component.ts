@@ -28,7 +28,7 @@ import { CTASectionComponent } from '../../../shared/components/layout';
             Artikel & <span class="text-gradient-gold">Edukasi Hukum</span>
           </h1>
           <p class="text-slate-300 text-base md:text-lg leading-relaxed mb-6">
-            Panduan hukum praktis, ulasan regulasi terbaru, dan artikel ilmiah dari advokat profesional LegalConnect.
+            Panduan hukum praktis, ulasan regulasi terbaru, dan artikel ilmiah dari advokat profesional Legalinesia.
           </p>
         </div>
 

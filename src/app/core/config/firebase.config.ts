@@ -20,9 +20,9 @@ export const FIREBASE_CONFIG = new InjectionToken<FirebaseClientConfig>('FIREBAS
 export function provideFirebaseConfig(config?: Partial<FirebaseClientConfig>): Provider {
   const defaultConfig: FirebaseClientConfig = {
     apiKey: (typeof window !== 'undefined' && (window as any).__ENV_FIREBASE_API_KEY__) || '',
-    authDomain: (typeof window !== 'undefined' && (window as any).__ENV_FIREBASE_AUTH_DOMAIN__) || 'legalconnect-id.firebaseapp.com',
-    projectId: (typeof window !== 'undefined' && (window as any).__ENV_FIREBASE_PROJECT_ID__) || 'legalconnect-id',
-    storageBucket: (typeof window !== 'undefined' && (window as any).__ENV_FIREBASE_STORAGE_BUCKET__) || 'legalconnect-id.appspot.com',
+    authDomain: (typeof window !== 'undefined' && (window as any).__ENV_FIREBASE_AUTH_DOMAIN__) || 'legalinesia-id.firebaseapp.com',
+    projectId: (typeof window !== 'undefined' && (window as any).__ENV_FIREBASE_PROJECT_ID__) || 'legalinesia-id',
+    storageBucket: (typeof window !== 'undefined' && (window as any).__ENV_FIREBASE_STORAGE_BUCKET__) || 'legalinesia-id.appspot.com',
     messagingSenderId: '',
     appId: '',
     isConfigured: Boolean(config?.apiKey || (typeof window !== 'undefined' && (window as any).__ENV_FIREBASE_API_KEY__))

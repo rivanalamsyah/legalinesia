@@ -112,7 +112,7 @@ import { EmptyStateComponent } from '../../../shared/components/ui/empty-state/e
                   
                   <div class="flex items-center gap-3">
                     <img
-                      [src]="item.professionalAvatar || '/images/avatars/avatar-male-1.svg'"
+                      [src]="item.professionalAvatar || '/images/avatars/avatar-male-1.png'"
                       [alt]="item.professionalName"
                       class="w-9 h-9 rounded-full object-cover border border-white/10" />
                     <div>

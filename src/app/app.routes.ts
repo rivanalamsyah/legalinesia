@@ -12,7 +12,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        title: 'LegalConnect - Platform Konsultasi Hukum & Direktori Advokat Terpercaya',
+        title: 'Legalinesia - Platform Konsultasi Hukum & Direktori Advokat Terpercaya',
         loadComponent: () =>
           import('./features/public/home/home-page.component').then(m => m.HomePageComponent)
       },
@@ -91,13 +91,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        title: 'Masuk ke LegalConnect',
+        title: 'Masuk ke Legalinesia',
         loadComponent: () =>
           import('./features/public/auth/auth-page.component').then(m => m.AuthPageComponent)
       },
       {
         path: 'register',
-        title: 'Daftar Akun LegalConnect',
+        title: 'Daftar Akun Legalinesia',
         loadComponent: () =>
           import('./features/public/auth/auth-page.component').then(m => m.AuthPageComponent)
       },

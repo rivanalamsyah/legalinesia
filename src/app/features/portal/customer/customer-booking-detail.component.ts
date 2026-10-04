@@ -72,7 +72,7 @@ import { ConfirmationDialogComponent } from '../../../shared/components/ui/confi
               
               <div class="flex items-start gap-4">
                 <img
-                  [src]="booking()!.professionalAvatar || '/images/avatars/avatar-male-1.svg'"
+                  [src]="booking()!.professionalAvatar || '/images/avatars/avatar-male-1.png'"
                   [alt]="booking()!.professionalName"
                   class="w-16 h-16 rounded-2xl object-cover border border-white/10 shadow-md" />
 

@@ -201,8 +201,8 @@ export class ContactPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.seo.updateSeo({
-      title: 'Hubungi Kami - Tim Support LegalConnect',
-      description: 'Hubungi tim support LegalConnect untuk bantuan pemesanan konsultasi, pembayaran, atau kendala platform.'
+      title: 'Hubungi Kami - Tim Support Legalinesia',
+      description: 'Hubungi tim support Legalinesia untuk bantuan pemesanan konsultasi, pembayaran, atau kendala platform.'
     });
   }
 

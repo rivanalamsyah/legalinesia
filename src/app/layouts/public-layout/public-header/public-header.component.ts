@@ -27,7 +27,7 @@ import { MegaMenuComponent } from './mega-menu.component';
         <div class="flex items-center justify-between h-20 py-3">
           
           <!-- Logo -->
-          <a routerLink="/" class="flex items-center gap-2.5 group" aria-label="LegalConnect - Kembali ke Beranda">
+          <a routerLink="/" class="flex items-center gap-2.5 group" aria-label="Legalinesia - Kembali ke Beranda">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 flex items-center justify-center shadow-brand-600/30 shadow-md group-hover:scale-105 transition-transform">
               <app-icon name="scale" size="md" className="text-white"></app-icon>
             </div>

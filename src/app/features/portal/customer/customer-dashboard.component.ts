@@ -27,7 +27,7 @@ import { ButtonComponent } from '../../../shared/components/ui/button/button.com
       <!-- Standardized Portal Page Header -->
       <app-portal-page-header
         categoryLabel="Portal Klien"
-        [title]="'Selamat Datang, ' + (user?.fullName || 'Klien LegalConnect')"
+        [title]="'Selamat Datang, ' + (user?.fullName || 'Klien Legalinesia')"
         subtitle="Kelola sesi konsultasi hukum, lacak dokumen permohonan, dan jadwalkan pertemuan dengan advokat terverifikasi."
         [breadcrumbs]="[{ label: 'Portal Klien', url: '/portal/customer' }, { label: 'Ringkasan' }]">
         
