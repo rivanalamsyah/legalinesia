@@ -17,14 +17,11 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
           
           <!-- Brand Column -->
           <div class="lg:col-span-2">
-            <a routerLink="/" class="flex items-center gap-3 mb-5 group" aria-label="Legalinesia - Beranda">
+            <a routerLink="/" class="inline-flex items-center mb-5 group" aria-label="Legalinesia - Beranda">
               <img
                 src="/logo-legalinesia.png"
-                alt="Logo Legalinesia"
-                class="h-9 w-auto object-contain transition-transform group-hover:scale-105" />
-              <span class="font-heading font-bold text-xl text-white tracking-tight">
-                Legal<span class="text-brand-400">inesia</span>
-              </span>
+                alt="Legalinesia"
+                class="h-12 w-auto object-contain transition-transform group-hover:scale-105" />
             </a>
             <p class="text-sm leading-relaxed text-slate-400 max-w-xs mb-6">
               Platform konsultasi hukum digital pertama di Indonesia yang menghubungkan Anda dengan advokat berlisensi PERADI secara transparan dan terpercaya.

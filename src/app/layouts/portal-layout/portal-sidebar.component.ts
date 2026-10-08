@@ -24,22 +24,11 @@ import { FirebaseAuthService } from '../../core/firebase/firebase-auth.service';
 
       <!-- Sidebar Header / Logo -->
       <div class="h-16 px-4 flex items-center justify-between border-b border-navy-800/60">
-        <a routerLink="/" class="flex items-center gap-2.5 overflow-hidden group" aria-label="Legalinesia - Beranda">
+        <a routerLink="/" class="flex items-center group py-1" aria-label="Legalinesia - Beranda">
           <img
             src="/logo-legalinesia.png"
-            alt="Logo Legalinesia"
-            class="h-8 w-auto object-contain shrink-0 transition-transform group-hover:scale-105" />
-
-          @if (!isCollapsed) {
-            <div class="flex flex-col whitespace-nowrap">
-              <span class="font-heading font-bold text-base text-white leading-none">
-                Legal<span class="text-brand-400">inesia</span>
-              </span>
-              <span class="text-[10px] text-white/50 font-medium tracking-wide uppercase mt-0.5">
-                {{ navConfig.portalTitle }}
-              </span>
-            </div>
-          }
+            alt="Legalinesia"
+            class="h-10 w-auto object-contain shrink-0 transition-transform group-hover:scale-105" />
         </a>
 
         <!-- Desktop Collapse Toggle Button -->

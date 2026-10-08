@@ -31,6 +31,10 @@ export class IconComponent {
     return LUCIDE_ICON_ALIASES[n] || n;
   });
 
+  private toPascalCase(str: string): string {
+    return str.replace(/(\w)([a-z0-9]*)(_|-|\s*)/g, (_, g1, g2) => g1.toUpperCase() + g2.toLowerCase());
+  }
+
   /**
    * Ensure icon name exists in provider; fallback to circle-help if unknown to prevent runtime errors.
    */
@@ -38,8 +42,8 @@ export class IconComponent {
     const nameToTest = this.normalizedName();
     if (!this.iconProviders || this.iconProviders.length === 0) return nameToTest;
 
-    // Check if any provider has this icon
-    const exists = this.iconProviders.some(p => p.hasIcon && p.hasIcon(nameToTest));
+    const pascalName = this.toPascalCase(nameToTest);
+    const exists = this.iconProviders.some(p => p.hasIcon && (p.hasIcon(pascalName) || p.hasIcon(nameToTest)));
     return exists ? nameToTest : 'circle-help';
   });
 

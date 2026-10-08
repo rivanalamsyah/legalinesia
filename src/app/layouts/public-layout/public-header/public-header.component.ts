@@ -26,15 +26,12 @@ import { MegaMenuComponent } from './mega-menu.component';
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20 py-3">
           
-          <!-- Logo -->
-          <a routerLink="/" class="flex items-center gap-3 group" aria-label="Legalinesia - Kembali ke Beranda">
+          <!-- Logo (Standalone Larger Logo) -->
+          <a routerLink="/" class="flex items-center group py-1" aria-label="Legalinesia - Kembali ke Beranda">
             <img
               src="/logo-legalinesia.png"
-              alt="Logo Legalinesia"
-              class="h-9 w-auto object-contain transition-transform group-hover:scale-105" />
-            <span class="font-heading font-bold text-xl md:text-2xl tracking-tight" [class.text-white]="!isScrolled()" [class.text-slate-900]="isScrolled()">
-              Legal<span class="text-brand-500">inesia</span>
-            </span>
+              alt="Legalinesia"
+              class="h-11 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
 
           <!-- Desktop Nav -->
