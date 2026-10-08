@@ -1,6 +1,7 @@
 import { Component, Input, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, LUCIDE_ICONS, LucideIconProviderInterface } from 'lucide-angular';
+import { LUCIDE_ICON_ALIASES, DEFAULT_STROKE_WIDTH } from '../../../../core/config/icon-registry';
 
 @Component({
   selector: 'app-icon',
@@ -19,7 +20,7 @@ import { LucideAngularModule, LUCIDE_ICONS, LucideIconProviderInterface } from '
 export class IconComponent {
   @Input({ required: true }) name!: string;
   @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
-  @Input() strokeWidth = 1.8;
+  @Input() strokeWidth = DEFAULT_STROKE_WIDTH;
   @Input() className = '';
 
   private readonly iconProviders = inject<LucideIconProviderInterface[]>(LUCIDE_ICONS, { optional: true });
@@ -27,35 +28,7 @@ export class IconComponent {
   public normalizedName = computed(() => {
     if (!this.name) return 'circle-help';
     const n = this.name.trim().toLowerCase();
-
-    // Alias mapping for common legacy & renamed Lucide icon names
-    const aliases: Record<string, string> = {
-      'x-circle': 'circle-x',
-      'check-circle': 'circle-check',
-      'check-circle-2': 'circle-check',
-      'alert-circle': 'circle-alert',
-      'alert-triangle': 'triangle-alert',
-      'help-circle': 'circle-help',
-      'plus-circle': 'circle-plus',
-      'minus-circle': 'circle-minus',
-      'user-circle': 'circle-user',
-      'play-circle': 'circle-play',
-      'pause-circle': 'circle-pause',
-      'stop-circle': 'circle-stop',
-      'arrow-up-circle': 'circle-arrow-up',
-      'arrow-down-circle': 'circle-arrow-down',
-      'arrow-left-circle': 'circle-arrow-left',
-      'arrow-right-circle': 'circle-arrow-right',
-      'calendar-x': 'calendar-x-2',
-      'file-check': 'file-check-2',
-      'trash': 'trash-2',
-      'close': 'x',
-      'logout': 'log-out',
-      'dashboard': 'layout-dashboard',
-      'help': 'circle-help'
-    };
-
-    return aliases[n] || n;
+    return LUCIDE_ICON_ALIASES[n] || n;
   });
 
   /**

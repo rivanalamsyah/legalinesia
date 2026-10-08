@@ -94,7 +94,7 @@ export class SeoService {
       '@type': 'LegalService',
       'name': 'Legalinesia Indonesia',
       'url': this.siteUrl,
-      'logo': `${this.siteUrl}/assets/images/logo.png`,
+      'logo': `${this.siteUrl}/logo-legalinesia.png`,
       'description': this.defaultDescription,
       'address': {
         '@type': 'PostalAddress',

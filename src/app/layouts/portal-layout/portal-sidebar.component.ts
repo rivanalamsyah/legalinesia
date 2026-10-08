@@ -24,15 +24,16 @@ import { FirebaseAuthService } from '../../core/firebase/firebase-auth.service';
 
       <!-- Sidebar Header / Logo -->
       <div class="h-16 px-4 flex items-center justify-between border-b border-navy-800/60">
-        <a routerLink="/" class="flex items-center gap-3 overflow-hidden">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-md shrink-0">
-            <app-icon name="scale" size="sm" className="text-white"></app-icon>
-          </div>
+        <a routerLink="/" class="flex items-center gap-2.5 overflow-hidden group" aria-label="Legalinesia - Beranda">
+          <img
+            src="/logo-legalinesia.png"
+            alt="Logo Legalinesia"
+            class="h-8 w-auto object-contain shrink-0 transition-transform group-hover:scale-105" />
 
           @if (!isCollapsed) {
             <div class="flex flex-col whitespace-nowrap">
               <span class="font-heading font-bold text-base text-white leading-none">
-                Legal<span class="text-brand-400">Connect</span>
+                Legal<span class="text-brand-400">inesia</span>
               </span>
               <span class="text-[10px] text-white/50 font-medium tracking-wide uppercase mt-0.5">
                 {{ navConfig.portalTitle }}

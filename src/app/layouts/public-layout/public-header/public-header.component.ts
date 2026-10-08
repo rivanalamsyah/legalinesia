@@ -27,12 +27,13 @@ import { MegaMenuComponent } from './mega-menu.component';
         <div class="flex items-center justify-between h-20 py-3">
           
           <!-- Logo -->
-          <a routerLink="/" class="flex items-center gap-2.5 group" aria-label="Legalinesia - Kembali ke Beranda">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 flex items-center justify-center shadow-brand-600/30 shadow-md group-hover:scale-105 transition-transform">
-              <app-icon name="scale" size="md" className="text-white"></app-icon>
-            </div>
-            <span class="font-heading font-bold text-xl md:text-2xl" [class.text-white]="!isScrolled()" [class.text-slate-900]="isScrolled()">
-              Legal<span class="text-brand-500">Connect</span>
+          <a routerLink="/" class="flex items-center gap-3 group" aria-label="Legalinesia - Kembali ke Beranda">
+            <img
+              src="/logo-legalinesia.png"
+              alt="Logo Legalinesia"
+              class="h-9 w-auto object-contain transition-transform group-hover:scale-105" />
+            <span class="font-heading font-bold text-xl md:text-2xl tracking-tight" [class.text-white]="!isScrolled()" [class.text-slate-900]="isScrolled()">
+              Legal<span class="text-brand-500">inesia</span>
             </span>
           </a>
 

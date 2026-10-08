@@ -18,12 +18,13 @@ import { IconComponent } from '../../../shared/components/ui/icon/icon.component
 
         <!-- Logo -->
         <div class="text-center">
-          <a routerLink="/" class="inline-flex items-center gap-2.5">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-md">
-              <app-icon name="scale" size="md" className="text-white"></app-icon>
-            </div>
-            <span class="font-heading font-bold text-2xl text-white">
-              Legal<span class="text-brand-400">Connect</span>
+          <a routerLink="/" class="inline-flex items-center gap-3 group" aria-label="Legalinesia - Beranda">
+            <img
+              src="/logo-legalinesia.png"
+              alt="Logo Legalinesia"
+              class="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
+            <span class="font-heading font-bold text-2xl text-white tracking-tight">
+              Legal<span class="text-brand-400">inesia</span>
             </span>
           </a>
         </div>
